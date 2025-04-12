@@ -1,0 +1,24 @@
+{
+    "name": "Triangulation3d.Samples",
+    "rootNamespace": "",
+    "references": [
+        "iShape.Mesh2d",
+        "iShape.Geometry",
+        "iShape.Triangulation",
+        "VContainer",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "macOSStandalone",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

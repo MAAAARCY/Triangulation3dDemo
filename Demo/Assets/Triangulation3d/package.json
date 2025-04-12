@@ -1,0 +1,17 @@
+﻿{
+  "name": "com.maaaarcy.triangulation3d",
+  "displayName": "Triangulation 3D Demo",
+  "version": "0.0.1",
+  "unity": "2022.3",
+  "description": "Demo Project Using Triangulation",
+  "author": {
+    "name": "maaaarcy"
+  },
+  "samples": [
+    {
+      "displayName": "Samples",
+      "description": "",
+      "path": "Samples~"
+    }
+  ]
+}
