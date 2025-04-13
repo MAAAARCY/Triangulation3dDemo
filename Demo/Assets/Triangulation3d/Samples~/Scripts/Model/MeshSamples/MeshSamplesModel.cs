@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Triangulation3d.Runtime;
 using UnityEngine;
 
 namespace Triangulation3d.Samples

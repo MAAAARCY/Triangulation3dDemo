@@ -1,13 +1,11 @@
 {
-    "name": "Triangulation3d.Samples",
+    "name": "Triangulation3d",
     "rootNamespace": "",
     "references": [
         "iShape.Mesh2d",
         "iShape.Geometry",
         "iShape.Triangulation",
-        "VContainer",
-        "UniTask",
-        "Triangulation3d"
+        "UniTask"
     ],
     "includePlatforms": [
         "Editor",

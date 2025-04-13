@@ -1,9 +1,9 @@
-using Cysharp.Threading.Tasks;
 using iShape.Triangulation.Runtime;
+using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 
-namespace Triangulation3d.Samples
+namespace Triangulation3d.Runtime
 {
     public class MeshFactoryModel
     {
