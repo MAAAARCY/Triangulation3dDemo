@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Triangulation3d.Samples
+namespace Triangulation3d.Runtime
 {
     /// <summary>
     /// メッシュのView

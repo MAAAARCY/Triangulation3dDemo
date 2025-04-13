@@ -1,4 +1,4 @@
-namespace Triangulation3d.Samples
+namespace Triangulation3d.Runtime
 {
     public class MeshModel
     {

@@ -1,4 +1,5 @@
 using iShape.Triangulation.Runtime;
+using Triangulation3d.Runtime;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,13 +14,22 @@ namespace Triangulation3d.Samples
         {
             base.Configure(builder);
             
+            ConfigureAPI(builder);
             ConfigureRepository(builder);
             ConfigureMesh(builder);
+        }
+
+        private void ConfigureAPI(IContainerBuilder builder)
+        {
+            builder.Register<Surface>(Lifetime.Singleton);
+            builder.Register<BlenderSurfaces>(Lifetime.Singleton);
+            builder.Register<SurfaceApiModel>(Lifetime.Singleton);
         }
 
         private void ConfigureRepository(IContainerBuilder builder)
         {
             builder.Register<MeshRepository>(Lifetime.Singleton);
+            builder.Register<SurfaceRepository>(Lifetime.Singleton);
         }
 
         private void ConfigureMesh(IContainerBuilder builder)
