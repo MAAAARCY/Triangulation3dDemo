@@ -1,9 +1,12 @@
 using iShape.Triangulation.Runtime;
 using Cysharp.Threading.Tasks;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Triangulation3d.Runtime
 {
@@ -52,12 +55,12 @@ namespace Triangulation3d.Runtime
             Surface surface,
             CancellationToken cancellationToken)
         {
-            var hullVertices = surface.Coordinates.Select(coordinate =>
+            var hullVertices = surface?.GetHullVertices();
+
+            if (hullVertices == null)
             {
-                var result = new Vector3(coordinate[0], coordinate[1], coordinate[2]);
-                
-                return result;
-            }).ToArray();
+                throw new NullReferenceException();
+            }
             
             var mesh = shapeMeshCreatorExt.CreateMesh(
                 hull: hullVertices,

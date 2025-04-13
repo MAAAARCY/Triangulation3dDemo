@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Samples.Triangulation3d.Scripts.Model.API
+namespace Triangulation3d.Samples
 {
     /// <summary>
     /// SurfaceApiModel

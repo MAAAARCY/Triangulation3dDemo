@@ -1,5 +1,4 @@
 using iShape.Triangulation.Runtime;
-using Samples.Triangulation3d.Scripts.Model.API;
 using Triangulation3d.Runtime;
 using UnityEngine;
 using VContainer;
