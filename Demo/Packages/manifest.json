@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.cysharp.r3": "1.2.9",
+    "com.cysharp.unitask": "2.5.10",
     "com.ishape.geometry": "https://github.com/iShapeUnity/Geometry.git",
     "com.ishape.mesh2d": "https://github.com/iShapeUnity/Mesh2d.git",
     "com.ishape.triangulation": "https://github.com/Synesthesias/Triangulation.git",
@@ -12,6 +13,7 @@
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.4",
     "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.8",
+    "org.nuget.r3": "1.2.9",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -43,5 +45,15 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.cysharp",
+        "org.nuget"
+      ]
+    }
+  ]
 }

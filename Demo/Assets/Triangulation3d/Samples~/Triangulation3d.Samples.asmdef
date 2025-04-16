@@ -7,7 +7,9 @@
         "iShape.Triangulation",
         "VContainer",
         "UniTask",
-        "Triangulation3d"
+        "R3.Unity",
+        "Triangulation3d",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor",
