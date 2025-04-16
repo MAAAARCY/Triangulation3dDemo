@@ -20,6 +20,8 @@ namespace Triangulation3d.Samples
             this.view = view;
 
             OnSubscribe();
+            model.InitializePose(view.Camera);
+            view.Camera.transform.LookAt(view.Target.transform.position);
         }
 
         public async UniTask StartAsync(CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ namespace Triangulation3d.Samples
         private void OnSubscribe()
         {
             view.OnKeyBoardInputAsObservable()
-                .Do(code => Debug.Log(code))
+                //.Do(code => Debug.Log(code))
                 .Subscribe(OnKeyBoardInput)
                 .AddTo(view);
 
@@ -42,7 +44,9 @@ namespace Triangulation3d.Samples
 
         private void OnKeyBoardInput(KeyCode keyCode)
         {
-            view.Camera.transform.position += model.GetCameraMove(keyCode);
+            // TODO:KeyCodeを管理するモデルの作成
+            view.Camera.transform.position = model.GetCameraPose(keyCode, view.Camera);
+            view.Camera.transform.LookAt(view.Target.transform.position);
         }
 
         private void OnMouseInput(Vector2 mousePosition)

@@ -5,43 +5,23 @@ namespace Triangulation3d.Samples
 {
     public class CameraModel
     {
-        private readonly float moveSpeed = 0.1f;
-        private readonly float rotationSpeed = 2f;
-        private readonly float smoothTime = 0.1f;
-
-        public CameraModel()
+        private readonly CameraPoseModel poseModel;
+        
+        public CameraModel(
+            CameraPoseModel poseModel)
         {
-            
+            this.poseModel = poseModel;
         }
 
-        public Vector3 GetCameraMove(KeyCode keyCode)
+        public void InitializePose(Camera camera)
         {
-            var move = CalculateCameraMove(keyCode);
-            return move;
+            poseModel.InitializePose(camera);
         }
 
-        private Vector3 CalculateCameraMove(KeyCode keyCode)
+        public Vector3 GetCameraPose(KeyCode keyCode, Camera camera)
         {
-            var result = Vector3.zero;
-            switch (keyCode)
-            {
-                case KeyCode.A:
-                    result += Vector3.left * moveSpeed;
-                    break;
-                case KeyCode.S:
-                    result += Vector3.back * moveSpeed;
-                    break;
-                case KeyCode.D:
-                    result += Vector3.right * moveSpeed;
-                    break;
-                case KeyCode.W:
-                    result += Vector3.forward * moveSpeed;
-                    break;
-                default:
-                    break;
-            }
-
-            return result;
+            var pose = poseModel.GetCameraPose(keyCode, camera);
+            return pose;
         }
     }
 

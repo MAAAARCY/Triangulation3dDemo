@@ -48,6 +48,8 @@ namespace Triangulation3d.Samples
 
         private void ConfigureCamera(IContainerBuilder builder)
         {
+            builder.Register<CameraPoseCalculatorModel>(Lifetime.Singleton);
+            builder.Register<CameraPoseModel>(Lifetime.Singleton);
             builder.Register<CameraModel>(Lifetime.Singleton);
 
             builder.RegisterInstance(cameraView);

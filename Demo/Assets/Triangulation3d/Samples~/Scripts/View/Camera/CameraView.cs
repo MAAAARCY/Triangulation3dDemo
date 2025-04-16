@@ -11,6 +11,7 @@ namespace Triangulation3d.Samples
         private readonly Subject<Vector2> mouseInputSubject = new();
         
         [SerializeField] private Camera camera;
+        [SerializeField] private GameObject target;
         
         /// <summary>
         /// キーボード入力のObservable
@@ -29,6 +30,12 @@ namespace Triangulation3d.Samples
         /// </summary>
         public Camera Camera 
             => camera;
+        
+        /// <summary>
+        /// 観察対象オブジェクト
+        /// </summary>
+        public GameObject Target
+            => target;
         
         // public void Move(Vector3 localMove, float speed)
         // {
