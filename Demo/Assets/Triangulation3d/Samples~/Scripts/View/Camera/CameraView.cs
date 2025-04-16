@@ -9,6 +9,7 @@ namespace Triangulation3d.Samples
     {
         private readonly Subject<KeyCode> keyBoardInputSubject = new();
         private readonly Subject<Vector2> mouseInputSubject = new();
+        private readonly Subject<float> mouseWheelInputSubject = new();
         
         [SerializeField] private Camera camera;
         [SerializeField] private GameObject target;
@@ -24,6 +25,9 @@ namespace Triangulation3d.Samples
         /// </summary>
         public Observable<Vector2> OnMouseHoverAsObservable()
             => mouseInputSubject;
+
+        public Observable<float> OnMouseWheelInputAsObservable()
+            => mouseWheelInputSubject;
 
         /// <summary>
         /// カメラ
@@ -53,6 +57,12 @@ namespace Triangulation3d.Samples
                         keyBoardInputSubject.OnNext(keyCode);
                     }
                 }
+            }
+            
+            var scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (scroll != 0)
+            {
+                mouseWheelInputSubject.OnNext(scroll);
             }
         }
     }

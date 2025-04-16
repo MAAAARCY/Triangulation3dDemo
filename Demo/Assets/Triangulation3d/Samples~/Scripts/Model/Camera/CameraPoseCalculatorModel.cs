@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 namespace Triangulation3d.Samples
@@ -50,8 +49,6 @@ namespace Triangulation3d.Samples
             return Mathf.Sqrt(Mathf.Pow(x,2) + Mathf.Pow(z,2));
         }
         
-        
-        
         /// <summary>
         /// カメラの位置を計算するメソッド
         /// </summary>
@@ -60,6 +57,7 @@ namespace Triangulation3d.Samples
         /// <param name="target"></param>
         /// <param name="rotateSpeed"></param>
         /// <param name="moveSpeed"></param>
+        /// <param name="zoomSpeed"></param>
         /// <returns></returns>
         public Vector3 CalculateCameraPose(
             KeyCode keyCode, 
@@ -82,6 +80,14 @@ namespace Triangulation3d.Samples
                     return camera.transform.position;
             }
         }
+
+        public Vector3 CalculateCameraPose(
+            Camera camera, 
+            Transform target,
+            float zoomSpeed)
+        {
+            return CalculateCameraPoseAlongCircle(camera, target, zoomSpeed);
+        }
         
         /// <summary>
         /// 半径radiusの円に沿って移動するときのカメラ位置を計算するメソッド
@@ -90,6 +96,7 @@ namespace Triangulation3d.Samples
         /// <param name="target"></param>
         /// <param name="rotateSpeed"></param>
         /// <param name="moveSpeed"></param>
+        /// <param name="zoomSpeed"></param>
         /// <returns></returns>
         private Vector3 CalculateCameraPoseAlongCircle(
             Camera camera,
@@ -103,7 +110,7 @@ namespace Triangulation3d.Samples
             {
                 currentAngle -= 360.0f;
             }
-                    
+            
             // 角度をラジアンに変換
             var radians = currentAngle * Mathf.Deg2Rad;
         
@@ -113,7 +120,37 @@ namespace Triangulation3d.Samples
             var z = target.position.z + radius * Mathf.Sin(radians);
         
             // カメラの位置を設定
-            var result = new Vector3(x, y, z); // TODO:Yも動かせるようにする
+            var result = new Vector3(x, y, z);
+
+            return result;
+        }
+        
+        /// <summary>
+        /// 半径radiusの円に沿って移動するときのカメラ位置を計算するメソッド
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="target"></param>
+        /// <param name="zoomSpeed"></param>
+        /// <returns></returns>
+        private Vector3 CalculateCameraPoseAlongCircle(
+            Camera camera,
+            Transform target,
+            float zoomSpeed)
+        {
+            // 角度をラジアンに変換
+            var radians = currentAngle * Mathf.Deg2Rad;
+            
+            // ズーム操作
+            if ((zoomSpeed > 0 && radius < 10) || (zoomSpeed < 0 && radius > 1))
+                radius += zoomSpeed;
+            
+            // 円周上の位置を計算
+            var x = target.position.x + radius * Mathf.Cos(radians);
+            var y = camera.transform.position.y;
+            var z = target.position.z + radius * Mathf.Sin(radians);
+        
+            // カメラの位置を設定
+            var result = new Vector3(x, y, z);
 
             return result;
         }

@@ -18,6 +18,7 @@ namespace Triangulation3d.Samples
         /// </summary>
         private readonly float moveSpeed = 0.1f;
         private readonly float rotateSpeed = 3.0f;
+        private readonly float zoomSpeed = 5.0f;
         
         private readonly CameraPoseCalculatorModel poseCalculatorModel;
 
@@ -40,6 +41,16 @@ namespace Triangulation3d.Samples
                 target: target,
                 rotateSpeed: rotateSpeed,
                 moveSpeed: moveSpeed);
+            
+            return result;
+        }
+
+        public Vector3 GetCameraPose(float scrollSpeed, Camera camera, Transform target)
+        {
+            var result = poseCalculatorModel.CalculateCameraPose(
+                camera: camera,
+                target: target,
+                zoomSpeed: scrollSpeed * zoomSpeed);
             
             return result;
         }

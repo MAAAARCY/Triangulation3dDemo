@@ -32,12 +32,16 @@ namespace Triangulation3d.Samples
         private void OnSubscribe()
         {
             view.OnKeyBoardInputAsObservable()
-                //.Do(code => Debug.Log(code))
+                .Do(code => Debug.Log(code))
                 .Subscribe(OnKeyBoardInput)
                 .AddTo(view);
 
             view.OnMouseHoverAsObservable()
                 .Subscribe(OnMouseInput)
+                .AddTo(view);
+            
+            view.OnMouseWheelInputAsObservable()
+                .Subscribe(OnMouseWheelInput)
                 .AddTo(view);
 
         }
@@ -52,6 +56,12 @@ namespace Triangulation3d.Samples
         private void OnMouseInput(Vector2 mousePosition)
         {
             
+        }
+
+        private void OnMouseWheelInput(float scrollSpeed)
+        {
+            view.Camera.transform.position = model.GetCameraPose(scrollSpeed, view.Camera, view.Target.transform);
+            view.Camera.transform.LookAt(view.Target.transform.position);
         }
     }
 
