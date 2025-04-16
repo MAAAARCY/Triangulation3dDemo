@@ -12,6 +12,13 @@ namespace Triangulation3d.Samples
         /// </summary>
         private Vector3 initialPosition;
         
+        /// <summary>
+        /// カメラの回転 or 移動速度
+        /// TODO:カメラのパラメータを管理するクラスに分割
+        /// </summary>
+        private readonly float moveSpeed = 0.1f;
+        private readonly float rotateSpeed = 3.0f;
+        
         private readonly CameraPoseCalculatorModel poseCalculatorModel;
 
         public CameraPoseModel(CameraPoseCalculatorModel poseCalculatorModel)
@@ -19,14 +26,21 @@ namespace Triangulation3d.Samples
             this.poseCalculatorModel = poseCalculatorModel;
         }
 
-        public void InitializePose(Camera camera)
+        public void InitializePose(Camera camera, Transform target)
         {
             initialPosition = camera.transform.position;
-            poseCalculatorModel.InitializePose(camera);
+            
+            poseCalculatorModel.InitializePose(camera, target);
         }
-        public Vector3 GetCameraPose(KeyCode keyCode, Camera camera)
+        public Vector3 GetCameraPose(KeyCode keyCode, Camera camera, Transform target)
         {
-            var result = poseCalculatorModel.CalculateCameraPose(keyCode, camera);
+            var result = poseCalculatorModel.CalculateCameraPose(
+                keyCode: keyCode, 
+                camera: camera, 
+                target: target,
+                rotateSpeed: rotateSpeed,
+                moveSpeed: moveSpeed);
+            
             return result;
         }
     }

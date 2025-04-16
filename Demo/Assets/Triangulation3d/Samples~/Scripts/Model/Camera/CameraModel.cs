@@ -13,14 +13,14 @@ namespace Triangulation3d.Samples
             this.poseModel = poseModel;
         }
 
-        public void InitializePose(Camera camera)
+        public void InitializePose(Camera camera, Transform target)
         {
-            poseModel.InitializePose(camera);
+            poseModel.InitializePose(camera, target);
         }
 
-        public Vector3 GetCameraPose(KeyCode keyCode, Camera camera)
+        public Vector3 GetCameraPose(KeyCode keyCode, Camera camera, Transform target)
         {
-            var pose = poseModel.GetCameraPose(keyCode, camera);
+            var pose = poseModel.GetCameraPose(keyCode, camera, target);
             return pose;
         }
     }

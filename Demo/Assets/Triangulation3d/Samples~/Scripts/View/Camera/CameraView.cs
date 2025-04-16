@@ -36,16 +36,6 @@ namespace Triangulation3d.Samples
         /// </summary>
         public GameObject Target
             => target;
-        
-        // public void Move(Vector3 localMove, float speed)
-        // {
-        //     camera.transform.position += transform.TransformDirection(localMove) * speed * Time.deltaTime;
-        // }
-        //
-        // public void Rotate(Vector2 rotation)
-        // {
-        //     camera.transform.rotation = Quaternion.Euler(rotation.y, rotation.x, 0f);
-        // }
 
         private void Update()
         {

@@ -20,7 +20,7 @@ namespace Triangulation3d.Samples
             this.view = view;
 
             OnSubscribe();
-            model.InitializePose(view.Camera);
+            model.InitializePose(view.Camera, view.Target.transform);
             view.Camera.transform.LookAt(view.Target.transform.position);
         }
 
@@ -45,7 +45,7 @@ namespace Triangulation3d.Samples
         private void OnKeyBoardInput(KeyCode keyCode)
         {
             // TODO:KeyCodeを管理するモデルの作成
-            view.Camera.transform.position = model.GetCameraPose(keyCode, view.Camera);
+            view.Camera.transform.position = model.GetCameraPose(keyCode, view.Camera, view.Target.transform);
             view.Camera.transform.LookAt(view.Target.transform.position);
         }
 

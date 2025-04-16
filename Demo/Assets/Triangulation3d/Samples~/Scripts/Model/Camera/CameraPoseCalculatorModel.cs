@@ -8,8 +8,6 @@ namespace Triangulation3d.Samples
     /// </summary>
     public class CameraPoseCalculatorModel
     {
-        private readonly float moveSpeed = 0.1f;
-        private readonly float rotationSpeed = 0.5f;
         private readonly float smoothTime = 0.01f;
         
         /// <summary>
@@ -18,22 +16,22 @@ namespace Triangulation3d.Samples
         private float currentAngle = 0;
         
         /// <summary>
-        /// Mathf.Abs(観察対象のオブジェクトのPosition - カメラのPosition)
+        /// 円の半径
         /// </summary>
         private float radius;
         
-        public void InitializePose(Camera camera)
+        public void InitializePose(Camera camera, Transform target)
         {
             currentAngle = CalculateInitialAngle(camera);
-            radius = Mathf.Abs(camera.transform.position.z - Vector3.zero.z); //TODO:Vector3.zeroを観察対象オブジェクトのTransformに変更
+            radius = CalculateRadius(camera, target);
         }
         
         /// <summary>
-        /// カメラの初期位置がVector3.zero以外に居る時に、補正する用の角度
+        /// カメラの初期位置をCameraView.Camera.Transformに合わせる用の角度
         /// </summary>
         /// <param name="camera"></param>
         /// <returns></returns>
-        public float CalculateInitialAngle(Camera camera)
+        private float CalculateInitialAngle(Camera camera)
         {
             var from = camera.transform.position;
             var to = Vector3.right;
@@ -43,29 +41,63 @@ namespace Triangulation3d.Samples
 
             return result;
         }
+
+        private float CalculateRadius(Camera camera, Transform target)
+        {
+            var x = Mathf.Abs(camera.transform.position.x - target.position.x);
+            var z = Mathf.Abs(camera.transform.position.z - target.position.z);
+            
+            return Mathf.Sqrt(Mathf.Pow(x,2) + Mathf.Pow(z,2));
+        }
         
-        public Vector3 CalculateCameraPose(KeyCode keyCode, Camera camera)
+        
+        
+        /// <summary>
+        /// カメラの位置を計算するメソッド
+        /// </summary>
+        /// <param name="keyCode"></param>
+        /// <param name="camera"></param>
+        /// <param name="target"></param>
+        /// <param name="rotateSpeed"></param>
+        /// <param name="moveSpeed"></param>
+        /// <returns></returns>
+        public Vector3 CalculateCameraPose(
+            KeyCode keyCode, 
+            Camera camera, 
+            Transform target,
+            float rotateSpeed,
+            float moveSpeed)
         {
             switch (keyCode)
             {
                 case KeyCode.A:
-                    return CalculateCameraPoseInCircle(camera, rotationSpeed);
-                // case KeyCode.S:
-                //     result += Vector3.back * moveSpeed;
-                //     break;
+                    return CalculateCameraPoseAlongCircle(camera, target, rotateSpeed, 0);
+                case KeyCode.S:
+                    return CalculateCameraPoseAlongCircle(camera, target, 0, -moveSpeed);
                 case KeyCode.D:
-                    return CalculateCameraPoseInCircle(camera, -rotationSpeed);
-                // case KeyCode.W:
-                //     result += Vector3.forward * moveSpeed;
-                //     break;
+                    return CalculateCameraPoseAlongCircle(camera, target, -rotateSpeed, 0);
+                case KeyCode.W:
+                    return CalculateCameraPoseAlongCircle(camera, target, 0, moveSpeed);
                 default:
                     return camera.transform.position;
             }
         }
-
-        private Vector3 CalculateCameraPoseInCircle(Camera camera, float speed)
+        
+        /// <summary>
+        /// 半径radiusの円に沿って移動するときのカメラ位置を計算するメソッド
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="target"></param>
+        /// <param name="rotateSpeed"></param>
+        /// <param name="moveSpeed"></param>
+        /// <returns></returns>
+        private Vector3 CalculateCameraPoseAlongCircle(
+            Camera camera,
+            Transform target, 
+            float rotateSpeed,
+            float moveSpeed)
         {
-            currentAngle += speed;
+            currentAngle += rotateSpeed;
                         
             if (currentAngle >= 360.0f)
             {
@@ -76,12 +108,12 @@ namespace Triangulation3d.Samples
             var radians = currentAngle * Mathf.Deg2Rad;
         
             // 円周上の位置を計算
-            // TODO: Vector3.zeroをターゲットのTransformに変更
-            var x = Vector3.zero.x + radius * Mathf.Cos(radians);
-            var z = Vector3.zero.z + radius * Mathf.Sin(radians);
+            var x = target.position.x + radius * Mathf.Cos(radians);
+            var y = camera.transform.position.y + moveSpeed;
+            var z = target.position.z + radius * Mathf.Sin(radians);
         
             // カメラの位置を設定
-            var result = new Vector3(x, 0, z); // TODO:Yも動かせるようにする
+            var result = new Vector3(x, y, z); // TODO:Yも動かせるようにする
 
             return result;
         }
