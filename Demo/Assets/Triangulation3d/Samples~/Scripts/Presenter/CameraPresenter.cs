@@ -32,7 +32,6 @@ namespace Triangulation3d.Samples
         private void OnSubscribe()
         {
             view.OnKeyBoardInputAsObservable()
-                .Do(code => Debug.Log(code))
                 .Subscribe(OnKeyBoardInput)
                 .AddTo(view);
 
