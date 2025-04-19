@@ -70,8 +70,9 @@ namespace Triangulation3d.Samples
                         baseElement.Title.SetText("Controls");
                         baseElement.GetDescriptionObject().SetActive(true);
                         baseElement.Content = Object.Instantiate(
-                            cameraControlsViewTemplate, 
+                            cameraControlsViewTemplate,
                             baseElement.GetContentObject().transform);
+                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 250);
                         break;
                     case MenuType.CameraSensitivity:
                         baseElement.Title.SetText("Camera Sensitivity");
@@ -79,6 +80,7 @@ namespace Triangulation3d.Samples
                         baseElement.Content = Object.Instantiate(
                             cameraSensitivityViewTemplate, 
                             baseElement.GetContentObject().transform);
+                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 150);
                         break;
                     case MenuType.Appearance:
                         baseElement.Title.SetText("Appearance");
@@ -86,6 +88,7 @@ namespace Triangulation3d.Samples
                         baseElement.Content = Object.Instantiate(
                             appearanceViewTemplate, 
                             baseElement.GetContentObject().transform);
+                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 200);
                         break;
                     case MenuType.JsonFileUpload:
                         baseElement.Title.SetText("Json File Upload");
@@ -93,6 +96,7 @@ namespace Triangulation3d.Samples
                         baseElement.Content = Object.Instantiate(
                             jsonFileUploadViewTemplate, 
                             baseElement.GetContentObject().transform);
+                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 300);
                         break;
                     case MenuType.SelectObject:
                         baseElement.Title.SetText("Select Object");

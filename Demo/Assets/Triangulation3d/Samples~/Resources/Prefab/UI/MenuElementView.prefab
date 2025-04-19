@@ -81,7 +81,7 @@ MonoBehaviour:
   title: {fileID: 360446420398905741}
   description: {fileID: 2803241585144367788}
   content: {fileID: 610328734566955652}
-  contentObject: {fileID: 8896119955783508897}
+  menuElementRect: {fileID: 7379265145860833168}
 --- !u!1 &2994456077776622257
 GameObject:
   m_ObjectHideFlags: 0

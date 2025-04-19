@@ -76,9 +76,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4736d440ce054b2fab579748e3692eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 0}
-  description: {fileID: 0}
-  content: {fileID: 0}
   cameraParameterView: {fileID: 3332890599846841733, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
 --- !u!1001 &3823457526648576949
 PrefabInstance:
@@ -198,6 +195,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1765827861367179816, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828933663800339790, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828933663800339790, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828933663800339790, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383634130976280278, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5383634130976280278, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
