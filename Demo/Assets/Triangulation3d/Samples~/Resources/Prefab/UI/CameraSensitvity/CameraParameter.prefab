@@ -596,8 +596,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 394416063567141557}
+  - component: {fileID: 3332890599846841733}
   m_Layer: 5
-  m_Name: Parameter
+  m_Name: CameraParameter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -623,3 +624,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 540, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3332890599846841733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8771129635557510809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3dd7b77762e4ccd84afcd74032cc23b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 565999858090192409}
+  slider: {fileID: 6201464963948537433}

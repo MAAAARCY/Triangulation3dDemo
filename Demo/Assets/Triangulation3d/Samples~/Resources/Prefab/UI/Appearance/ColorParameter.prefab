@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7235806787336150298}
   - component: {fileID: 3547690547774319184}
   - component: {fileID: 4321937729593319853}
+  - component: {fileID: -9090504799661880176}
   m_Layer: 5
   m_Name: ColorParameter
   m_TagString: Untagged
@@ -120,3 +121,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-9090504799661880176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238603766806401560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcad374ed6fc49f6a76b39cdb3ab1ab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 3547690547774319184}
+  button: {fileID: 4321937729593319853}

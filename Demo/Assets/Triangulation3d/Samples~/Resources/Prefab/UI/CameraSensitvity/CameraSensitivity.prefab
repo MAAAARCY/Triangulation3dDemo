@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 785322596400577294}
   - component: {fileID: 191784964289983969}
+  - component: {fileID: 1706010100271981142}
   m_Layer: 5
   m_Name: CameraSensitivity
   m_TagString: Untagged
@@ -63,6 +64,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1706010100271981142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430068288763782070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4736d440ce054b2fab579748e3692eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 0}
+  description: {fileID: 0}
+  content: {fileID: 0}
+  cameraParameterView: {fileID: 3332890599846841733, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
 --- !u!1001 &3823457526648576949
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,15 +8,15 @@ namespace Triangulation3d.Samples
 {
     public class MeshSamplesPresenter : IAsyncStartable
     {
-        private readonly MeshSamplesModel meshSamplesModel;
-		private readonly MeshSamplesView meshSamplesView;
+        private readonly MeshSamplesModel model;
+		private readonly MeshSamplesView view;
 
         public MeshSamplesPresenter(
-            MeshSamplesModel meshSamplesModel,
-            MeshSamplesView meshSamplesView)
+            MeshSamplesModel model,
+            MeshSamplesView view)
         {
-            this.meshSamplesModel = meshSamplesModel;
-            this.meshSamplesView = meshSamplesView;
+            this.model = model;
+            this.view = view;
             OnSubscribe();
         }
 
@@ -24,7 +24,7 @@ namespace Triangulation3d.Samples
         {
             try
             {
-                await meshSamplesModel.StartAsync(cancellationToken);
+                await model.StartAsync(cancellationToken);
             }
             catch (Exception e)
             {
