@@ -8,8 +8,8 @@
         "VContainer",
         "UniTask",
         "R3.Unity",
-        "Triangulation3d",
-        "Unity.InputSystem"
+        "Unity.TextMeshPro",
+        "Triangulation3d"
     ],
     "includePlatforms": [
         "Editor",
