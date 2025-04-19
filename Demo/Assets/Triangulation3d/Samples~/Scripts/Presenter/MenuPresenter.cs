@@ -19,7 +19,7 @@ namespace Triangulation3d.Samples
             this.model = model;
             this.view = view;
             
-            model.CreateMenu(view.RootObject.transform);
+            model.CreateMenu(view.ContentObject.transform);
             OnSubscribe();
         }
         
@@ -49,6 +49,7 @@ namespace Triangulation3d.Samples
 
         private void OnClickMenu()
         {
+            view.MenuButton.transform.Rotate(Vector3.forward, 180f);
             model.IsVisibleProperty.OnNext(!model.IsVisibleProperty.Value);
         }
 

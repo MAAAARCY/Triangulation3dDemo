@@ -22,20 +22,5 @@ namespace Triangulation3d.Samples.UI
         public GameObject GetDescriptionObject() => description.gameObject.transform.parent.gameObject;
         
         public GameObject GetContentObject() => content.gameObject;
-
-        protected virtual void Start()
-        {
-            gameObject.SetActive(true);
-        }
-
-        protected void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        protected void Hide()
-        {
-            gameObject.SetActive(false);
-        }
     }
 }

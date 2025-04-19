@@ -11,7 +11,7 @@ namespace Triangulation3d.Samples
 {
     public class MenuModel
     {
-        private List<BaseMenuElementView> elements;
+        private List<BaseMenuElementView> menuElementViews;
         private MenuType[] menuTypes;
         
         /// <summary>
@@ -50,7 +50,7 @@ namespace Triangulation3d.Samples
                 MenuType.SelectObject
             };
 
-            elements = new List<BaseMenuElementView>();
+            menuElementViews = new List<BaseMenuElementView>();
         }
 
         public async UniTask StartAsync(CancellationToken cancellationToken)
@@ -105,7 +105,7 @@ namespace Triangulation3d.Samples
                         break;
                 }
                 
-                elements.Append(baseElement);
+                menuElementViews.Append(baseElement);
             }
         }
     }
