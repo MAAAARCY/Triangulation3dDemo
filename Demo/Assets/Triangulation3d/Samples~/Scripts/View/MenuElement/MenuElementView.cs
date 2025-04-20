@@ -4,12 +4,12 @@ using TMPro;
 using UnityEditor;
 using UnityEditor.ShaderKeywordFilter;
 
-namespace Triangulation3d.Samples.UI
+namespace Triangulation3d.Samples
 {
     /// <summary>
     /// メニュー項目のベースコンポーネント
     /// </summary>
-    public class BaseMenuElementView : MonoBehaviour
+    public class MenuElementView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;

@@ -2,6 +2,7 @@ using iShape.Triangulation.Runtime;
 using Triangulation3d.Runtime;
 using Triangulation3d.Samples.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -13,16 +14,6 @@ namespace Triangulation3d.Samples
         [SerializeField] private MeshSamplesView meshSamplesView;
         [SerializeField] private MenuView menuView;
         [SerializeField] private CameraView cameraView;
-        
-        /// <summary>
-        /// メニューの各項目のUI
-        /// </summary>
-        [SerializeField] private CameraControlsView cameraControlsViewTemplate;
-        [SerializeField] private CameraSensitivityView cameraSensitivityViewTemplate;
-        [SerializeField] private AppearanceView appearanceViewTemplate;
-        [SerializeField] private JsonFileUploadView jsonFileUploadViewTemplate;
-        [SerializeField] private SelectObjectView selectObjectViewTemplate;
-        [SerializeField] private BaseMenuElementView baseMenuElementViewTemplate;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -72,12 +63,13 @@ namespace Triangulation3d.Samples
 
         private void ConfigureMenu(IContainerBuilder builder)
         {
-            builder.RegisterInstance(baseMenuElementViewTemplate);
-            builder.RegisterInstance(cameraControlsViewTemplate);
-            builder.RegisterInstance(cameraSensitivityViewTemplate);
-            builder.RegisterInstance(appearanceViewTemplate);
-            builder.RegisterInstance(jsonFileUploadViewTemplate);
-            builder.RegisterInstance(selectObjectViewTemplate);
+            // builder.RegisterInstance(menuElementViewTemplate);
+            // builder.RegisterInstance(cameraControlsViewTemplate);
+            // builder.RegisterInstance(cameraSensitivityViewTemplate);
+            // builder.RegisterInstance(appearanceViewTemplate);
+            // builder.RegisterInstance(jsonFileUploadViewTemplate);
+            // builder.RegisterInstance(selectObjectViewTemplate);
+            builder.Register<CameraSensitivityModel>(Lifetime.Singleton);
             
             builder.Register<MenuModel>(Lifetime.Singleton);
             builder.RegisterInstance(menuView);

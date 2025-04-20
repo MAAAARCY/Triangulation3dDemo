@@ -1,6 +1,6 @@
-﻿namespace Triangulation3d.Samples.UI
+﻿namespace Triangulation3d.Samples
 {
-    public enum MenuType
+    public enum MenuElementType
     {
         CameraControls,
         CameraSensitivity,

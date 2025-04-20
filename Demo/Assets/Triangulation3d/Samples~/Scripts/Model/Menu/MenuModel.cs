@@ -1,116 +1,112 @@
 ﻿using Cysharp.Threading.Tasks;
 using iShape.Geometry.Polygon;
 using R3;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Triangulation3d.Samples.UI;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Triangulation3d.Samples
 {
     public class MenuModel
     {
-        private List<BaseMenuElementView> menuElementViews;
-        private MenuType[] menuTypes;
+        private List<MenuElementView> menuElementViews;
+        private MenuElementType[] menuTypes;
+        private Dictionary<MenuElementType, String> menuTypeNames;
+        private readonly Subject<MenuElementModel> addElementSubject = new();
+        private readonly Subject<MenuElementType> addElementTypeSubject = new();
+        
+        /// <summary>
+        /// メニューの要素を追加のObservable
+        /// </summary>
+        public Observable<MenuElementModel> OnElementAddedAsObservable()
+            => addElementSubject;
+        
+        /// <summary>
+        /// メニューの要素を追加のObservable
+        /// </summary>
+        public Observable<MenuElementType> OnElementTypeAddedAsObservable()
+            => addElementTypeSubject;
         
         /// <summary>
         /// メニューを表示するか
         /// </summary>
         public readonly ReactiveProperty<bool> IsVisibleProperty = new(false);
         
-        private readonly CameraControlsView cameraControlsViewTemplate; 
-        private readonly CameraSensitivityView cameraSensitivityViewTemplate;
-        private readonly AppearanceView appearanceViewTemplate;
-        private readonly JsonFileUploadView jsonFileUploadViewTemplate;
-        private readonly SelectObjectView selectObjectViewTemplate;
-        private readonly BaseMenuElementView baseMenuElementViewTemplate;
+        private readonly CameraSensitivityModel cameraSensitivityModel;
 
-        public MenuModel(
-            CameraControlsView cameraControlsViewTemplate, 
-            CameraSensitivityView cameraSensitivityViewTemplate,
-            AppearanceView appearanceViewTemplate,
-            JsonFileUploadView jsonFileUploadViewTemplate,
-            SelectObjectView selectObjectViewTemplate,
-            BaseMenuElementView baseMenuElementViewTemplate)
+        public MenuModel(CameraSensitivityModel cameraSensitivityModel)
         {
-            this.cameraControlsViewTemplate = cameraControlsViewTemplate;
-            this.cameraSensitivityViewTemplate = cameraSensitivityViewTemplate;
-            this.appearanceViewTemplate = appearanceViewTemplate;
-            this.jsonFileUploadViewTemplate = jsonFileUploadViewTemplate;
-            this.selectObjectViewTemplate = selectObjectViewTemplate;
-            this.baseMenuElementViewTemplate = baseMenuElementViewTemplate;
-            
-            menuTypes = new MenuType[]
+            this.cameraSensitivityModel = cameraSensitivityModel;
+        }
+
+        public void InitializeElements()
+        {
+            var menuElementTypes = new MenuElementType[]
             {
-                MenuType.CameraControls, 
-                MenuType.CameraSensitivity,
-                MenuType.Appearance,
-                MenuType.JsonFileUpload,
-                MenuType.SelectObject
+                MenuElementType.CameraControls, MenuElementType.CameraSensitivity, MenuElementType.Appearance,
+                MenuElementType.JsonFileUpload, MenuElementType.SelectObject
             };
 
-            menuElementViews = new List<BaseMenuElementView>();
-        }
-
-        public async UniTask StartAsync(CancellationToken cancellationToken)
-        {
-
-        }
-
-        public void CreateMenu(Transform parent)
-        {
-            foreach (var menuType in menuTypes)
+            foreach (var menuElementType in menuElementTypes)
             {
-                var baseElement = Object.Instantiate(baseMenuElementViewTemplate, parent);
-
-                switch (menuType)
+                switch (menuElementType)
                 {
-                    case MenuType.CameraControls:
-                        baseElement.Title.SetText("Controls");
-                        baseElement.GetDescriptionObject().SetActive(true);
-                        baseElement.Content = Object.Instantiate(
-                            cameraControlsViewTemplate,
-                            baseElement.GetContentObject().transform);
-                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 250);
+                    case MenuElementType.CameraControls:
+                        AddElement(new MenuElementModel(
+                            "Camera Controls", 
+                            OnClickCameraSensitivity, 
+                            menuElementType,
+                            true));
                         break;
-                    case MenuType.CameraSensitivity:
-                        baseElement.Title.SetText("Camera Sensitivity");
-                        baseElement.GetDescriptionObject().SetActive(false);
-                        baseElement.Content = Object.Instantiate(
-                            cameraSensitivityViewTemplate, 
-                            baseElement.GetContentObject().transform);
-                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 150);
+                    case MenuElementType.CameraSensitivity:
+                        AddElement(new MenuElementModel(
+                            "Camera Sensitivity", 
+                            OnClickCameraSensitivity, 
+                            menuElementType));
                         break;
-                    case MenuType.Appearance:
-                        baseElement.Title.SetText("Appearance");
-                        baseElement.GetDescriptionObject().SetActive(false);
-                        baseElement.Content = Object.Instantiate(
-                            appearanceViewTemplate, 
-                            baseElement.GetContentObject().transform);
-                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 200);
+                    case MenuElementType.Appearance:
+                        AddElement(new MenuElementModel(
+                            "Appearance", 
+                            OnClickCameraSensitivity, 
+                            menuElementType));
                         break;
-                    case MenuType.JsonFileUpload:
-                        baseElement.Title.SetText("Json File Upload");
-                        baseElement.GetDescriptionObject().SetActive(false);
-                        baseElement.Content = Object.Instantiate(
-                            jsonFileUploadViewTemplate, 
-                            baseElement.GetContentObject().transform);
-                        baseElement.MenuElementRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 300);
+                    case MenuElementType.JsonFileUpload:
+                        AddElement(new MenuElementModel(
+                            "Json File Upload", 
+                            OnClickCameraSensitivity, 
+                            menuElementType));
                         break;
-                    case MenuType.SelectObject:
-                        baseElement.Title.SetText("Select Object");
-                        baseElement.GetDescriptionObject().SetActive(false);
-                        baseElement.Content = Object.Instantiate(
-                            selectObjectViewTemplate, 
-                            baseElement.GetContentObject().transform);
-                        break;
-                    default:
+                    case MenuElementType.SelectObject:
+                        AddElement(new MenuElementModel(
+                            "Select Object", 
+                            OnClickCameraSensitivity, 
+                            menuElementType));
                         break;
                 }
-                
-                menuElementViews.Append(baseElement);
             }
+            
         }
+
+        public void AddElement(MenuElementModel menuElementModel)
+        {
+            addElementSubject.OnNext(menuElementModel);
+        }
+        
+        public void AddElementType(MenuElementType menuElementType)
+        {
+            
+        }
+
+        public async UniTask OnClickCameraSensitivity(CancellationToken cancellationToken)
+        {
+
+        }
+
+        
     }
 }

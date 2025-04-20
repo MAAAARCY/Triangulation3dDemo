@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Triangulation3d.Samples.UI
+namespace Triangulation3d.Samples
 {
     /// <summary>
     /// 選択可能なカラーのUIのView

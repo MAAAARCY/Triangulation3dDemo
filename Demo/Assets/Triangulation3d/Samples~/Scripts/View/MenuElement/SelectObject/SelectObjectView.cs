@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Triangulation3d.Samples.UI
+namespace Triangulation3d.Samples
 {
     /// <summary>
     /// 表示するオブジェクトを選択するUIのView

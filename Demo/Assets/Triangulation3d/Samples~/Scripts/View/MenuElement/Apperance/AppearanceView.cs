@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Triangulation3d.Samples.UI
+namespace Triangulation3d.Samples
 {
     /// <summary>
     /// オブジェクトの色を変更するUIのView
