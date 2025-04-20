@@ -152,12 +152,10 @@ namespace Triangulation3d.Samples
             switch (menuElementType)
             {
                 case MenuElementType.Appearance:
-                    await appearanceModel.OnAppearanceChanged(cancellationToken);
                     break;
                 case MenuElementType.JsonFileUpload:
                     break;
                 case MenuElementType.SelectObject:
-                    await selectObjectModel.OnClickSelectableObject(cancellationToken);
                     break;
             }
             await menuElementModel.ClickAsync(cancellationToken);
