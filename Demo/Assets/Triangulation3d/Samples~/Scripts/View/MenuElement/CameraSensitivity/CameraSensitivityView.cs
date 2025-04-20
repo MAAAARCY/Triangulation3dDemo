@@ -10,5 +10,11 @@ namespace Triangulation3d.Samples
     public class CameraSensitivityView : BaseMenuContentView
     {
         [SerializeField] private CameraParameterView cameraParameterView;
+        
+        [SerializeField] private Slider cameraSensitivitySlider;
+        
+        public CameraParameterView CameraParameterView => cameraParameterView;
+        
+        public Slider CameraSensitivitySlider => cameraSensitivitySlider;
     }
 }

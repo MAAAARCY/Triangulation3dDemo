@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Triangulation3d.Samples.UI
@@ -12,24 +13,25 @@ namespace Triangulation3d.Samples.UI
         [SerializeField] private GameObject contentObject;
         [SerializeField] private Button menuButton;
         
+        [SerializeField] private MenuElementView[] menuElementViews;
+        
         /// <summary>
         /// メニューの各項目のUIのテンプレート’
         /// </summary>
-        [SerializeField] private CameraControlsView cameraControlsViewTemplate;
-        [SerializeField] private CameraSensitivityView cameraSensitivityViewTemplate;
-        [SerializeField] private AppearanceView appearanceViewTemplate;
-        [SerializeField] private JsonFileUploadView jsonFileUploadViewTemplate;
-        [SerializeField] private SelectObjectView selectObjectViewTemplate;
-        [SerializeField] private MenuElementView menuElementViewTemplate;
-        
+        [SerializeField] private CameraControlsView cameraControlsView;
+        [SerializeField] private CameraSensitivityView cameraSensitivityView;
+        [SerializeField] private AppearanceView appearanceView;
+        [SerializeField] private JsonFileUploadView jsonFileUploadView;
+        [SerializeField] private SelectObjectView selectObjectView;
+
         public GameObject RootObject => rootObject;
         public GameObject ContentObject => contentObject;
         public Button MenuButton => menuButton;
-        public CameraControlsView CameraControlsViewTemplate => cameraControlsViewTemplate;
-        public CameraSensitivityView CameraSensitivityViewTemplate => cameraSensitivityViewTemplate;
-        public AppearanceView AppearanceViewTemplate => appearanceViewTemplate;
-        public JsonFileUploadView JsonFileUploadViewTemplate => jsonFileUploadViewTemplate;
-        public SelectObjectView SelectObjectViewTemplate => selectObjectViewTemplate;
-        public MenuElementView MenuElementViewTemplate => menuElementViewTemplate;
+        public MenuElementView[] MenuElementViews => menuElementViews;
+        public CameraControlsView CameraControlsView => cameraControlsView;
+        public CameraSensitivityView CameraSensitivityView => cameraSensitivityView;
+        public AppearanceView AppearanceView => appearanceView;
+        public JsonFileUploadView JsonFileUploadView => jsonFileUploadView;
+        public SelectObjectView SelectObjectView => selectObjectView;
     }
 }

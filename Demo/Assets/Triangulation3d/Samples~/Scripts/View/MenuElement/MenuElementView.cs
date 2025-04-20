@@ -19,8 +19,6 @@ namespace Triangulation3d.Samples
         public TextMeshProUGUI Title => title;
         public TextMeshProUGUI Description => description;
         public RectTransform MenuElementRect { get { return menuElementRect; } set { menuElementRect = value; } }
-
-        public BaseMenuContentView Content { get { return content; } set { content = value; } }
         
         public GameObject GetDescriptionObject() => description.gameObject.transform.parent.gameObject;
         

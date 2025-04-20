@@ -10,7 +10,7 @@ namespace Triangulation3d.Samples
     public class MenuElementModel : IDisposable
     {
         private readonly CompositeDisposable disposable = new();
-        //private readonly Func<CancellationToken, UniTask> onClickAsync;
+        private readonly Func<CancellationToken, UniTask> onClickAsync;
 
         /// <summary>
         /// テキスト
@@ -26,10 +26,6 @@ namespace Triangulation3d.Samples
         /// MenuElementType
         /// </summary>
         public readonly ReactiveProperty<MenuElementType> MenuElementTypeProperty;
-        
-        //private MenuElementType elementType;
-        
-        //public MenuElementType ElementType => elementType;
 
         /// <summary>
         /// コンストラクタ
@@ -43,8 +39,7 @@ namespace Triangulation3d.Samples
             TextProperty = new ReactiveProperty<string>(text);
             DescriptionProperty = new ReactiveProperty<bool>(descriptionEnable);
             MenuElementTypeProperty = new ReactiveProperty<MenuElementType>(elementType);
-            //this.onClickAsync = onClickAsync;
-            //this.elementType = elementType;
+            this.onClickAsync = onClickAsync;
         }
 
         /// <summary>
@@ -54,13 +49,14 @@ namespace Triangulation3d.Samples
         {
             disposable.Dispose();
         }
-
+        
         /// <summary>
         /// クリックを通知
         /// </summary>
-        // public async UniTask ClickAsync(CancellationToken cancellationToken)
-        // {
-        //     await onClickAsync.Invoke(cancellationToken);
-        // }
+        public async UniTask ClickAsync(CancellationToken cancellationToken)
+        {
+            await onClickAsync.Invoke(cancellationToken);
+        }
+
     }
 }

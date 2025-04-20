@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraParameterView: {fileID: 3332890599846841733, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+  cameraSensitivitySlider: {fileID: 6943666947982780705}
 --- !u!1001 &3823457526648576949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,6 +166,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1181014213531140437, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181014213531140437, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181014213531140437, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1739305117084940260, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -217,6 +230,30 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7024433653298289521, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7024433653298289521, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7800930522206248803, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7800930522206248803, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7800930522206248803, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7800930522206248803, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8771129635557510809, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
       propertyPath: m_Name
       value: Parameter
@@ -231,3 +268,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 394416063567141557, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
   m_PrefabInstance: {fileID: 3823457526648576949}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6943666947982780705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6148392126377685652, guid: af4ee4ce758627646a4e7cde0533b31b, type: 3}
+  m_PrefabInstance: {fileID: 3823457526648576949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

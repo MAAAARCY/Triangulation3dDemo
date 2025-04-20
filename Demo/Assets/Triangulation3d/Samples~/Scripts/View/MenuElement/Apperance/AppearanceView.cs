@@ -8,5 +8,7 @@ namespace Triangulation3d.Samples
     public class AppearanceView : BaseMenuContentView
     {
         [SerializeField] private ColorParameterView colorParameterView;
+        
+        public ColorParameterView ColorParameterView => colorParameterView;
     }
 }

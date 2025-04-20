@@ -8,5 +8,7 @@ namespace Triangulation3d.Samples
     public class SelectObjectView : BaseMenuContentView
     {
         [SerializeField] private SelectableObjectView selectableObjectView;
+        
+        public SelectableObjectView SelectableObjectView => selectableObjectView;
     }
 }

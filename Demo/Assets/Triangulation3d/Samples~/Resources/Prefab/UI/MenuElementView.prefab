@@ -82,6 +82,11 @@ MonoBehaviour:
   description: {fileID: 2803241585144367788}
   content: {fileID: 610328734566955652}
   menuElementRect: {fileID: 7379265145860833168}
+  cameraControlsViewTemplate: {fileID: 4112003930260504663, guid: 87b0fb016d266ff4896e9b55c1ab9cf2, type: 3}
+  cameraSensitivityViewTemplate: {fileID: 1706010100271981142, guid: 77a5f7d06682f6d4a9222aefc62e6cdf, type: 3}
+  appearanceViewTemplate: {fileID: 3527521576687895884, guid: bebe72b8e366fb34ca37f4872311bdb1, type: 3}
+  jsonFileUploadViewTemplate: {fileID: -375579296690031751, guid: d883e37a767fc984c9cb28f813c2b084, type: 3}
+  selectObjectViewTemplate: {fileID: 922171990602423325, guid: 06ce5a693c3208847ab0dc8460e573d3, type: 3}
 --- !u!1 &2994456077776622257
 GameObject:
   m_ObjectHideFlags: 0

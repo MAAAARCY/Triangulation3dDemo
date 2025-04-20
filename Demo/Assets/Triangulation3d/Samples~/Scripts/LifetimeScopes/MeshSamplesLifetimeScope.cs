@@ -63,13 +63,11 @@ namespace Triangulation3d.Samples
 
         private void ConfigureMenu(IContainerBuilder builder)
         {
-            // builder.RegisterInstance(menuElementViewTemplate);
-            // builder.RegisterInstance(cameraControlsViewTemplate);
-            // builder.RegisterInstance(cameraSensitivityViewTemplate);
-            // builder.RegisterInstance(appearanceViewTemplate);
-            // builder.RegisterInstance(jsonFileUploadViewTemplate);
-            // builder.RegisterInstance(selectObjectViewTemplate);
+            builder.Register<CameraControlsModel>(Lifetime.Singleton);
             builder.Register<CameraSensitivityModel>(Lifetime.Singleton);
+            builder.Register<ApperanceModel>(Lifetime.Singleton);
+            builder.Register<JsonFileUploadModel>(Lifetime.Singleton);
+            builder.Register<SelectObjectModel>(Lifetime.Singleton);
             
             builder.Register<MenuModel>(Lifetime.Singleton);
             builder.RegisterInstance(menuView);

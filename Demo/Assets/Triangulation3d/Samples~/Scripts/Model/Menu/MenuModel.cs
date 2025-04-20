@@ -12,6 +12,9 @@ using Object = UnityEngine.Object;
 
 namespace Triangulation3d.Samples
 {
+    /// <summary>
+    /// Menu全体のモデル
+    /// </summary>
     public class MenuModel
     {
         private List<MenuElementView> menuElementViews;
@@ -37,13 +40,23 @@ namespace Triangulation3d.Samples
         /// </summary>
         public readonly ReactiveProperty<bool> IsVisibleProperty = new(false);
         
+        /// <summary>
+        /// メニューの初期化が正常に終了したかどうか
+        /// </summary>
+        public readonly ReactiveProperty<bool> IsCompletedProperty = new(false);
+        
         private readonly CameraSensitivityModel cameraSensitivityModel;
 
         public MenuModel(CameraSensitivityModel cameraSensitivityModel)
         {
             this.cameraSensitivityModel = cameraSensitivityModel;
+            
+            //InitializeElements();
         }
-
+        
+        /// <summary>
+        /// 各MenuElementの初期化
+        /// </summary>
         public void InitializeElements()
         {
             var menuElementTypes = new MenuElementType[]
@@ -58,34 +71,34 @@ namespace Triangulation3d.Samples
                 {
                     case MenuElementType.CameraControls:
                         AddElement(new MenuElementModel(
-                            "Camera Controls", 
-                            OnClickCameraSensitivity, 
-                            menuElementType,
-                            true));
+                            text: "Camera Controls", 
+                            onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
+                            elementType: menuElementType,
+                            descriptionEnable: true));
                         break;
                     case MenuElementType.CameraSensitivity:
                         AddElement(new MenuElementModel(
-                            "Camera Sensitivity", 
-                            OnClickCameraSensitivity, 
-                            menuElementType));
+                            text: "Camera Sensitivity", 
+                            onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
+                            elementType: menuElementType));
                         break;
                     case MenuElementType.Appearance:
                         AddElement(new MenuElementModel(
-                            "Appearance", 
-                            OnClickCameraSensitivity, 
-                            menuElementType));
+                            text: "Appearance", 
+                            onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
+                            elementType: menuElementType));
                         break;
                     case MenuElementType.JsonFileUpload:
                         AddElement(new MenuElementModel(
-                            "Json File Upload", 
-                            OnClickCameraSensitivity, 
-                            menuElementType));
+                            text: "Json File Upload", 
+                            onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
+                            elementType: menuElementType));
                         break;
                     case MenuElementType.SelectObject:
                         AddElement(new MenuElementModel(
-                            "Select Object", 
-                            OnClickCameraSensitivity, 
-                            menuElementType));
+                            text: "Select Object", 
+                            onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
+                            elementType: menuElementType));
                         break;
                 }
             }
@@ -96,17 +109,20 @@ namespace Triangulation3d.Samples
         {
             addElementSubject.OnNext(menuElementModel);
         }
-        
+
         public void AddElementType(MenuElementType menuElementType)
         {
-            
-        }
-
-        public async UniTask OnClickCameraSensitivity(CancellationToken cancellationToken)
-        {
 
         }
-
         
+        /// <summary>
+        /// クリックを通知
+        /// </summary>
+        public async UniTask ClickAsync(
+            MenuElementModel menuElementModel,
+            CancellationToken cancellationToken)
+        {
+            await menuElementModel.ClickAsync(cancellationToken);
+        }
     }
 }
