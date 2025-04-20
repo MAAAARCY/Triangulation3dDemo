@@ -1,3 +1,4 @@
+using R3;
 using UnityEngine;
 
 namespace Triangulation3d.Samples
@@ -7,6 +8,8 @@ namespace Triangulation3d.Samples
     /// </summary>
     public class CameraPoseModel
     {
+        public ReactiveProperty<float> RotationSpeedProperty = new(3.0f);
+        
         /// <summary>
         /// カメラの初期位置
         /// </summary>
@@ -17,7 +20,7 @@ namespace Triangulation3d.Samples
         /// TODO:カメラのパラメータを管理するクラスに分割
         /// </summary>
         private readonly float moveSpeed = 0.1f;
-        private readonly float rotateSpeed = 3.0f;
+        //private readonly float rotateSpeed = 3.0f;
         private readonly float zoomSpeed = 5.0f;
         
         private readonly CameraPoseCalculatorModel poseCalculatorModel;
@@ -39,7 +42,7 @@ namespace Triangulation3d.Samples
                 keyCode: keyCode, 
                 camera: camera, 
                 target: target,
-                rotateSpeed: rotateSpeed,
+                rotateSpeed: RotationSpeedProperty.Value,
                 moveSpeed: moveSpeed);
             
             return result;

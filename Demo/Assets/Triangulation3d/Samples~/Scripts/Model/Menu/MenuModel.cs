@@ -114,12 +114,32 @@ namespace Triangulation3d.Samples
         {
 
         }
+
+        public async UniTask OnValueChangedAsync(
+            MenuElementModel menuElementModel,
+            MenuElementView menuElementView,
+            MenuElementType menuElementType,
+            float rotationSpeed,
+            CancellationToken cancellationToken)
+        {
+            switch (menuElementType)
+            {
+                case MenuElementType.CameraSensitivity:
+                    await cameraSensitivityModel.OnRotationSpeedChangedAsync(rotationSpeed, cancellationToken);
+                    break;
+                default:
+                    await UniTask.Yield();
+                    break;
+            }
+        }
         
         /// <summary>
         /// クリックを通知
         /// </summary>
         public async UniTask ClickAsync(
             MenuElementModel menuElementModel,
+            MenuElementView menuElementView,
+            MenuElementType menuElementType,
             CancellationToken cancellationToken)
         {
             await menuElementModel.ClickAsync(cancellationToken);

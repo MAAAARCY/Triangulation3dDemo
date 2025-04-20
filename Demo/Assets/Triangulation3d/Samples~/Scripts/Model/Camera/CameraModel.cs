@@ -7,11 +7,17 @@ namespace Triangulation3d.Samples
     public class CameraModel
     {
         private readonly CameraPoseModel poseModel;
+        private readonly CameraRepository cameraRepository;
+        
+        public Observable<float> OnRotationSpeedAsObservable()
+            => cameraRepository.RotationSpeedProperty.AsObservable();
         
         public CameraModel(
-            CameraPoseModel poseModel)
+            CameraPoseModel poseModel,
+            CameraRepository cameraRepository)
         {
             this.poseModel = poseModel;
+            this.cameraRepository = cameraRepository;
         }
 
         public void InitializePose(Camera camera, Transform target)
@@ -29,6 +35,12 @@ namespace Triangulation3d.Samples
         {
             var pose = poseModel.GetCameraPose(zoomSpeed, camera, target);
             return pose;
+        }
+
+        public void OnRotationSpeedChanged(float rotationSpeed)
+        {
+            // Debug.Log(rotationSpeed);
+            poseModel.RotationSpeedProperty.Value = rotationSpeed;
         }
     }
 

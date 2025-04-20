@@ -9,7 +9,12 @@ namespace Triangulation3d.Samples
     public class CameraSensitivityModel
     {
         private readonly CompositeDisposable disposable = new();
-        // }
+        private readonly CameraRepository cameraRepository;
+
+        public CameraSensitivityModel(CameraRepository cameraRepository)
+        {
+            this.cameraRepository = cameraRepository;
+        }
         
         /// <summary>
         /// 破棄
@@ -20,9 +25,16 @@ namespace Triangulation3d.Samples
         }
         
         
+        public async UniTask OnRotationSpeedChangedAsync(
+            float rotationSpeed,
+            CancellationToken cancellationToken)
+        {
+            cameraRepository.RotationSpeedProperty.OnNext(rotationSpeed);
+            await UniTask.Yield();
+        }
+
         public async UniTask OnClickCameraSensitivityAsync(CancellationToken cancellationToken)
         {
-            Debug.Log("CameraSensitivity OnClickCameraSensitivityAsync");
             await UniTask.Yield();
         }
     }

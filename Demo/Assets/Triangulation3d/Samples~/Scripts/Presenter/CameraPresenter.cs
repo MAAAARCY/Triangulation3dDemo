@@ -43,6 +43,9 @@ namespace Triangulation3d.Samples
                 .Subscribe(OnMouseWheelInput)
                 .AddTo(view);
 
+            model.OnRotationSpeedAsObservable()
+                .Subscribe(OnRotationSpeed)
+                .AddTo(view);
         }
 
         private void OnKeyBoardInput(KeyCode keyCode)
@@ -61,6 +64,11 @@ namespace Triangulation3d.Samples
         {
             view.Camera.transform.position = model.GetCameraPose(scrollSpeed, view.Camera, view.Target.transform);
             view.Camera.transform.LookAt(view.Target.transform.position);
+        }
+
+        private void OnRotationSpeed(float speed)
+        {
+            model.OnRotationSpeedChanged(speed);
         }
     }
 

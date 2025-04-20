@@ -43,11 +43,6 @@ namespace Triangulation3d.Samples
 
         private void Update()
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-            
             if (Input.anyKey)
             {
                 foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))

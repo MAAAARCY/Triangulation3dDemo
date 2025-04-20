@@ -139,13 +139,23 @@ namespace Triangulation3d.Samples
                     view.CameraSensitivityView
                         .CameraSensitivitySlider
                         .OnValueChangedAsObservable()
+                        .Subscribe(value => OnValueChangedAsync(
+                            menuElementModel, 
+                            menuElementView,
+                            menuElementType,
+                            value).Forget(Debug.LogWarning))
+                        .AddTo(disposable);
+                    break;
+                case MenuElementType.Appearance:
+                    view.AppearanceView
+                        .ColorParameterView
+                        .Button
+                        .OnClickAsObservable()
                         .Subscribe(_ => OnClickElementAsync(
                             menuElementModel, 
                             menuElementView,
                             menuElementType).Forget(Debug.LogWarning))
                         .AddTo(disposable);
-                    break;
-                case MenuElementType.Appearance:
                     break;
                 case MenuElementType.JsonFileUpload:
                     break;
@@ -153,7 +163,37 @@ namespace Triangulation3d.Samples
                     break;
             }
         }
-        
+
+        private async UniTask OnValueChangedAsync(
+            MenuElementModel menuElementModel,
+            MenuElementView menuElementView,
+            MenuElementType elementType,
+            float rotationSpeed)
+        {
+            var source = new CancellationTokenSource();
+            cancellationTokenSources.Add(source);
+            
+            try
+            {
+                //var view = cachedElementViews[MenuElementType.CameraSensitivity].Content.CameraParameterView;
+                // menuElementView.AppearanceViewTemplate
+                //     .ColorParameterView
+                //     .Button.interactable = false;
+                
+                await model.OnValueChangedAsync(
+                    menuElementModel,
+                    menuElementView,
+                    elementType,
+                    rotationSpeed,
+                    source.Token);
+            }
+            catch (Exception e)
+            {
+                source.Cancel();
+                Debug.LogWarning(e);
+            }
+        }
+
         private async UniTask OnClickElementAsync(
             MenuElementModel menuElementModel,
             MenuElementView menuElementView,
@@ -171,6 +211,8 @@ namespace Triangulation3d.Samples
                 
                 await model.ClickAsync(
                     menuElementModel,
+                    menuElementView,
+                    elementType,
                     source.Token);
             }
             catch (Exception e)
