@@ -46,10 +46,20 @@ namespace Triangulation3d.Samples
         public readonly ReactiveProperty<bool> IsCompletedProperty = new(false);
         
         private readonly CameraSensitivityModel cameraSensitivityModel;
+        private readonly ApperanceModel appearanceModel;
+        private readonly JsonFileUploadModel jsonFileUploadModel;
+        private readonly SelectObjectModel selectObjectModel;
 
-        public MenuModel(CameraSensitivityModel cameraSensitivityModel)
+        public MenuModel(
+            CameraSensitivityModel cameraSensitivityModel,
+            ApperanceModel appearanceModel,
+            JsonFileUploadModel jsonFileUploadModel,
+            SelectObjectModel selectObjectModel)
         {
             this.cameraSensitivityModel = cameraSensitivityModel;
+            this.appearanceModel = appearanceModel;
+            this.jsonFileUploadModel = jsonFileUploadModel;
+            this.selectObjectModel = selectObjectModel;
             
             //InitializeElements();
         }
@@ -119,13 +129,13 @@ namespace Triangulation3d.Samples
             MenuElementModel menuElementModel,
             MenuElementView menuElementView,
             MenuElementType menuElementType,
-            float rotationSpeed,
+            float value,
             CancellationToken cancellationToken)
         {
             switch (menuElementType)
             {
                 case MenuElementType.CameraSensitivity:
-                    await cameraSensitivityModel.OnRotationSpeedChangedAsync(rotationSpeed, cancellationToken);
+                    await cameraSensitivityModel.OnRotationSpeedChangedAsync(value, cancellationToken);
                     break;
                 default:
                     await UniTask.Yield();
@@ -133,15 +143,23 @@ namespace Triangulation3d.Samples
             }
         }
         
-        /// <summary>
-        /// クリックを通知
-        /// </summary>
         public async UniTask ClickAsync(
             MenuElementModel menuElementModel,
             MenuElementView menuElementView,
             MenuElementType menuElementType,
             CancellationToken cancellationToken)
         {
+            switch (menuElementType)
+            {
+                case MenuElementType.Appearance:
+                    await appearanceModel.OnAppearanceChanged(cancellationToken);
+                    break;
+                case MenuElementType.JsonFileUpload:
+                    break;
+                case MenuElementType.SelectObject:
+                    await selectObjectModel.OnClickSelectableObject(cancellationToken);
+                    break;
+            }
             await menuElementModel.ClickAsync(cancellationToken);
         }
     }

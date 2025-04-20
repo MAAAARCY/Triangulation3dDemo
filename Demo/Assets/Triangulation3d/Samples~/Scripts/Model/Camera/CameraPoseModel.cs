@@ -42,7 +42,7 @@ namespace Triangulation3d.Samples
                 keyCode: keyCode, 
                 camera: camera, 
                 target: target,
-                rotateSpeed: RotationSpeedProperty.Value,
+                rotationSpeed: RotationSpeedProperty.Value,
                 moveSpeed: moveSpeed);
             
             return result;
