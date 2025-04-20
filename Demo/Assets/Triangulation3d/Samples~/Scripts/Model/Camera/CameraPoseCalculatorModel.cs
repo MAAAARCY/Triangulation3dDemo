@@ -55,7 +55,7 @@ namespace Triangulation3d.Samples
         /// <param name="keyCode"></param>
         /// <param name="camera"></param>
         /// <param name="target"></param>
-        /// <param name="rotateSpeed"></param>
+        /// <param name="rotationSpeed"></param>
         /// <param name="moveSpeed"></param>
         /// <param name="zoomSpeed"></param>
         /// <returns></returns>
@@ -63,17 +63,17 @@ namespace Triangulation3d.Samples
             KeyCode keyCode, 
             Camera camera, 
             Transform target,
-            float rotateSpeed,
+            float rotationSpeed,
             float moveSpeed)
         {
             switch (keyCode)
             {
                 case KeyCode.A:
-                    return CalculateCameraPoseAlongCircle(camera, target, rotateSpeed, 0);
+                    return CalculateCameraPoseAlongCircle(camera, target, rotationSpeed, 0);
                 case KeyCode.S:
                     return CalculateCameraPoseAlongCircle(camera, target, 0, -moveSpeed);
                 case KeyCode.D:
-                    return CalculateCameraPoseAlongCircle(camera, target, -rotateSpeed, 0);
+                    return CalculateCameraPoseAlongCircle(camera, target, -rotationSpeed, 0);
                 case KeyCode.W:
                     return CalculateCameraPoseAlongCircle(camera, target, 0, moveSpeed);
                 default:
@@ -94,17 +94,17 @@ namespace Triangulation3d.Samples
         /// </summary>
         /// <param name="camera"></param>
         /// <param name="target"></param>
-        /// <param name="rotateSpeed"></param>
+        /// <param name="rotationSpeed"></param>
         /// <param name="moveSpeed"></param>
         /// <param name="zoomSpeed"></param>
         /// <returns></returns>
         private Vector3 CalculateCameraPoseAlongCircle(
             Camera camera,
             Transform target, 
-            float rotateSpeed,
+            float rotationSpeed,
             float moveSpeed)
         {
-            currentAngle += rotateSpeed;
+            currentAngle += rotationSpeed;
                         
             if (currentAngle >= 360.0f)
             {

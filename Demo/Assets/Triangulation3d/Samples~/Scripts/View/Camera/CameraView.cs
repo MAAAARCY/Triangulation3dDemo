@@ -43,10 +43,11 @@ namespace Triangulation3d.Samples
 
         private void Update()
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
+            // if (EventSystem.current.IsPointerOverGameObject())
+            // {
+            //     Debug.Log("Over");
+            //     return;
+            // }
             
             if (Input.anyKey)
             {
@@ -59,10 +60,14 @@ namespace Triangulation3d.Samples
                 }
             }
             
-            var scroll = Input.GetAxis("Mouse ScrollWheel");
-            if (scroll != 0)
+            // メニュー画面にカーソルがあるときはズームできないようにする
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                mouseWheelInputSubject.OnNext(scroll);
+                var scroll = Input.GetAxis("Mouse ScrollWheel");
+                if (scroll != 0)
+                {
+                    mouseWheelInputSubject.OnNext(scroll);
+                }
             }
         }
     }
