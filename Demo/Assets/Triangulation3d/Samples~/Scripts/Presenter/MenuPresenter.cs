@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Triangulation3d.Samples.UI;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using VContainer.Unity;
 using Debug = UnityEngine.Debug;

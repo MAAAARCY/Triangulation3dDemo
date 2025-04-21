@@ -1,8 +1,6 @@
-using iShape.Triangulation.Runtime;
 using Triangulation3d.Runtime;
 using Triangulation3d.Samples.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -28,6 +26,7 @@ namespace Triangulation3d.Samples
 
         private void ConfigureAPI(IContainerBuilder builder)
         {
+            builder.Register<JsonLoaderModel>(Lifetime.Singleton);
             builder.Register<Surface>(Lifetime.Singleton);
             builder.Register<BlenderSurfaces>(Lifetime.Singleton);
             builder.Register<SurfaceApiModel>(Lifetime.Singleton);
@@ -45,7 +44,6 @@ namespace Triangulation3d.Samples
             builder.RegisterInstance(meshSamplesView);
             builder.Register<MeshFactoryModel>(Lifetime.Singleton);
             builder.Register<MeshModel>(Lifetime.Singleton);
-            builder.Register<ShapeMeshCreatorExt>(Lifetime.Singleton);
             
             builder.RegisterInstance(meshViewTemplate);
             builder.RegisterEntryPoint<MeshSamplesPresenter>();

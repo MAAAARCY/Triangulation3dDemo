@@ -1,8 +1,6 @@
 using iShape.Triangulation.Runtime;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -16,11 +14,12 @@ namespace Triangulation3d.Runtime
         private readonly MeshView meshViewTemplate;
         
         public MeshFactoryModel(
-            ShapeMeshCreatorExt shapeMeshCreatorExt,
+            // ShapeMeshCreatorExt shapeMeshCreatorExt,
             MeshView meshViewTemplate)
         {
-            this.shapeMeshCreatorExt = shapeMeshCreatorExt;
             this.meshViewTemplate = meshViewTemplate;
+            
+            shapeMeshCreatorExt = new ShapeMeshCreatorExt();
         }
         
         /// <summary>

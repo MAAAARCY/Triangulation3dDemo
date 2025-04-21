@@ -40,7 +40,7 @@ namespace Triangulation3d.Samples
         public void OnRotationSpeedChanged(float rotationSpeed)
         {
             // Debug.Log(rotationSpeed);
-            poseModel.RotationSpeedProperty.Value = rotationSpeed;
+            poseModel.RotationSpeedProperty.Value = rotationSpeed * 3.0f;
         }
     }
 

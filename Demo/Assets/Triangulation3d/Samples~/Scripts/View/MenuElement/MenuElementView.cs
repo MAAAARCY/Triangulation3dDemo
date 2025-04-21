@@ -1,8 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using UnityEditor;
-using UnityEditor.ShaderKeywordFilter;
 
 namespace Triangulation3d.Samples
 {

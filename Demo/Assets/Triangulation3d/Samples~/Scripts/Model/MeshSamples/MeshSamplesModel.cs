@@ -33,7 +33,7 @@ namespace Triangulation3d.Samples
 
         private async UniTask OnMeshesAsync(CancellationToken cancellationToken)
         {
-            var surfaces = await surfaceRepository.GetSurfacesAsync("Assets/Triangulation3d/Samples~/Scripts/JsonFiles/CubeVertices.json", cancellationToken);
+            var surfaces = await surfaceRepository.GetSurfacesAsync("CubeVertices.json", cancellationToken);
             var meshViews = await GetMeshViewsAsync(surfaces, cancellationToken);
             
             meshRepository.SetMeshViews(meshViews);

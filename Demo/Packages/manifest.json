@@ -5,6 +5,7 @@
     "com.ishape.geometry": "https://github.com/iShapeUnity/Geometry.git",
     "com.ishape.mesh2d": "https://github.com/iShapeUnity/Mesh2d.git",
     "com.ishape.triangulation": "https://github.com/Synesthesias/Triangulation.git",
+    "com.unity.addressables": "1.22.3",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
