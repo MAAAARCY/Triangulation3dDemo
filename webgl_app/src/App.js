@@ -13,14 +13,19 @@ function App() {
   });
 
   return (
-      <div className="Unity-Content">
-        <Unity unityProvider={unityProvider}
-               style={{
-                 height: "1080px",
-                 width: "1920px",
-                 border: "2px solid black",
-                 background: "grey",
-               }}/>
+      <div>
+          <div className="title-center">
+              <h2>Triangulation 3d Demo</h2>
+          </div>
+          <div className="unity-content">
+              <Unity unityProvider={unityProvider}
+                     style={{
+                         height: "1080px",
+                         width: "1920px",
+                         border: "2px solid black",
+                         background: "grey",
+                     }}/>
+          </div>
       </div>
   );
 }
