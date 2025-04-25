@@ -47,16 +47,10 @@ namespace Triangulation3d.Samples
         /// </summary>
         public void Dispose()
         {
+            TextProperty.Dispose();
+            DescriptionProperty.Dispose();
+            MenuElementTypeProperty.Dispose();
             disposable.Dispose();
         }
-        
-        /// <summary>
-        /// クリックを通知
-        /// </summary>
-        public async UniTask ClickAsync(CancellationToken cancellationToken)
-        {
-            await onClickAsync.Invoke(cancellationToken);
-        }
-
     }
 }

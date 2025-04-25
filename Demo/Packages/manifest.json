@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cysharp.observablecollections": "1.1.3",
     "com.cysharp.r3": "1.2.9",
     "com.cysharp.unitask": "2.5.10",
     "com.ishape.geometry": "https://github.com/iShapeUnity/Geometry.git",
