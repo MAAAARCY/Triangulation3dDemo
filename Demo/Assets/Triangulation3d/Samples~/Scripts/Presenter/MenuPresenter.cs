@@ -158,10 +158,10 @@ namespace Triangulation3d.Samples
                         .OnClickAsObservable()
                         .Subscribe(_ =>
                         {
-                            OnClickElementAsync(
-                                menuElementModel,
-                                menuElementView,
-                                menuElementType).Forget(Debug.LogWarning);
+                            // OnClickElementAsync(
+                            //     menuElementModel,
+                            //     menuElementView,
+                            //     menuElementType).Forget(Debug.LogWarning);
                         })
                         .AddTo(disposable);
                     break;
@@ -179,10 +179,7 @@ namespace Triangulation3d.Samples
                         selectableObjectView.Initialize(selectableObjectModel.ObjectName);
                         
                         selectableObjectView.Button.OnClickAsObservable()
-                            .Subscribe(_ => OnClickElementAsync(
-                                menuElementModel,
-                                menuElementView,
-                                menuElementType).Forget(Debug.LogWarning))
+                            .Subscribe(_ => OnClickSelectableObjectAsync(selectableObjectView.ObjectName).Forget(Debug.LogWarning))
                             .AddTo(disposable);
                         
                         return selectableObjectView;
@@ -246,6 +243,23 @@ namespace Triangulation3d.Samples
             catch (Exception e)
             {
                 source.Cancel();
+                Debug.LogWarning(e);
+            }
+        }
+
+        private async UniTask OnClickSelectableObjectAsync(
+            string objectName)
+        {
+            var source = new CancellationTokenSource();
+            cancellationTokenSources.Add(source);
+            
+            try
+            {
+                await model.OnSelectableObjectAsync(objectName, source.Token);
+            }
+            catch (Exception e)
+            {
+                
                 Debug.LogWarning(e);
             }
         }

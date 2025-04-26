@@ -107,11 +107,11 @@ namespace Triangulation3d.Samples
                             elementType: menuElementType));
                         break;
                     case MenuElementType.SelectObject:
-                        selectObjectModel.InitializeSelectableObject();
                         AddElement(new MenuElementModel(
                             text: "Select Object", 
                             onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
                             elementType: menuElementType));
+                        selectObjectModel.InitializeSelectableObject();
                         break;
                 }
             }
@@ -141,6 +141,13 @@ namespace Triangulation3d.Samples
                     break;
             }
         }
+
+        public async UniTask OnSelectableObjectAsync(
+            string objectName,
+            CancellationToken cancellationToken)
+        {
+            await selectObjectModel.OnSelectableObjectChangedAsync(objectName, cancellationToken);
+        }
         
         public async UniTask ClickAsync(
             MenuElementModel menuElementModel,
@@ -155,7 +162,6 @@ namespace Triangulation3d.Samples
                 case MenuElementType.JsonFileUpload:
                     break;
                 case MenuElementType.SelectObject:
-                    await selectObjectModel.OnSelectableObjectChangedAsync(cancellationToken);
                     break;
             }
         }

@@ -92,14 +92,14 @@ namespace Triangulation3d.Samples
         /// <summary>
         /// jsonFileから頂点データを取得
         /// </summary>
-        /// <param name="jsonFilePath"></param>
+        /// <param name="objectName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public async UniTask<List<Surface>> GetSurfaceAsync(
-            string jsonFilePath, 
+            string objectName, 
             CancellationToken cancellationToken)
         {
-            var result = await jsonLoaderModel.ReadAllTextAsync(jsonFilePath, cancellationToken);
+            var result = await jsonLoaderModel.ReadAllTextAsync($"{objectName}Vertices.json", cancellationToken);
             
             return result;
         }

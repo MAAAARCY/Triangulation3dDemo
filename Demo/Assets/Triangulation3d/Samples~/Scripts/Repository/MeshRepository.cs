@@ -11,27 +11,13 @@ namespace Triangulation3d.Samples
     /// </summary>
     public class MeshRepository
     {
-        private readonly Dictionary<string, MeshView> cachedMeshViews = new();
+        private readonly Dictionary<string, List<MeshView>> cachedMeshViews = new();
         
-        public IReadOnlyCollection<MeshView> CachedMeshViews
-            => cachedMeshViews.Values;
-
-        public void SetMesh(MeshView meshView)
+        public void SetMeshViews(
+            string objectName,
+            List<MeshView> meshViews)
         {
-            // if (meshViews.ContainsKey(meshView.Id))
-            // {
-            //     throw new InvalidOperationException($"Mesh view with id {meshView.Id} already exists.");
-            // }
-            
-            cachedMeshViews[meshView.Id] = meshView;
-        }
-        
-        public void SetMeshViews(List<MeshView> meshViews)
-        {
-            foreach (var meshView in meshViews)
-            {
-                SetMesh(meshView);
-            }
+            cachedMeshViews[objectName] = meshViews;
         }
 
         public void Clear()

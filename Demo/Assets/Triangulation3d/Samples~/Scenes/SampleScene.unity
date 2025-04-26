@@ -161,6 +161,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   meshViewTemplate: {fileID: 2579246818220261576, guid: f53f708d4384f4eb5ba187d155e2c801, type: 3}
+  combinedMeshViewTemplate: {fileID: 5812843405163882587, guid: d956c9814aea62446abd438ed95fcef6, type: 3}
   meshSamplesView: {fileID: 403567625}
   menuView: {fileID: 403567624}
   cameraView: {fileID: 403567623}
