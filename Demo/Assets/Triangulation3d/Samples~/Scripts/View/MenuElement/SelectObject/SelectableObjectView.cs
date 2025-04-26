@@ -11,8 +11,13 @@ namespace Triangulation3d.Samples
     {
         [SerializeField] private TextMeshProUGUI objectName;
         [SerializeField] private Button button;
-        
-        public TextMeshProUGUI ObjectName => objectName;
         public Button Button => button;
+        
+        public string ObjectName => objectName.text;
+
+        public void Initialize(string name)
+        {
+            this.objectName.SetText(name);
+        }
     }
 }

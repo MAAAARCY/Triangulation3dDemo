@@ -1,6 +1,7 @@
 using iShape.Triangulation.Runtime;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -12,12 +13,15 @@ namespace Triangulation3d.Runtime
     {
         private readonly ShapeMeshCreatorExt shapeMeshCreatorExt;
         private readonly MeshView meshViewTemplate;
+        private readonly CombinedMeshView combinedMeshViewTemplate;
         
         public MeshFactoryModel(
             // ShapeMeshCreatorExt shapeMeshCreatorExt,
-            MeshView meshViewTemplate)
+            MeshView meshViewTemplate,
+            CombinedMeshView combinedMeshViewTemplate)
         {
             this.meshViewTemplate = meshViewTemplate;
+            this.combinedMeshViewTemplate  = combinedMeshViewTemplate;
             
             shapeMeshCreatorExt = new ShapeMeshCreatorExt();
         }
@@ -60,22 +64,71 @@ namespace Triangulation3d.Runtime
             {
                 throw new NullReferenceException();
             }
-            
+
             var mesh = shapeMeshCreatorExt.CreateMesh(
                 hull: hullVertices,
                 holes: null);
-            
+
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
-            
-            meshViewTemplate.MeshFilter.mesh = mesh;
-            
+
+            meshViewTemplate.MeshFilter.sharedMesh = mesh;
+
             var meshView = Object.Instantiate(
                 meshViewTemplate,
                 hullVertices[0], // 最初の頂点をオブジェクトの原点として設定する
                 Quaternion.identity);
-            
+
             return meshView;
+        }
+
+        public async UniTask<CombinedMeshView> CreateCombinedMeshView(
+            List<MeshView> meshViews,
+            string filterName,
+            CancellationToken cancellationToken)
+        {
+            // var combineInstances = new List<CombineInstance>();
+
+            var combinedMeshView = Object.Instantiate(combinedMeshViewTemplate, Vector3.zero, Quaternion.identity);
+            combinedMeshView.MeshFilter.name = filterName;
+            
+            foreach (var meshView in meshViews)
+            {
+                meshView.GetGameObject().transform.parent = combinedMeshView.RootObject.transform;
+            }
+            
+            combinedMeshView.RootObject.SetActive(false);
+            // var count = 0;
+            // foreach (var meshView in meshViews)
+            // {
+            //     // ローカル→ワールド→結合先のローカル座標に変換するための行列
+            //     // var worldToLocalMatrix = combinedMeshViewTemplate.CombinedMeshObject.transform.worldToLocalMatrix;
+            //     // var localToWorldMatrix = meshView.GetGameObject().transform.localToWorldMatrix;
+            //     // Matrix4x4 transformMatrix = worldToLocalMatrix * localToWorldMatrix;
+            //     
+            //     CombineInstance combineInstance = new CombineInstance
+            //     {
+            //         mesh = meshView.MeshFilter.sharedMesh,
+            //         // subMeshIndex = count,
+            //         transform = meshView.GetGameObject().transform.localToWorldMatrix
+            //     };
+            //     
+            //     combineInstances.Add(combineInstance);
+            //     count++;
+            // }
+            //
+            // Mesh combinedMesh = new Mesh();
+            // combinedMesh.name = "Sample";
+            // combinedMesh.CombineMeshes(combineInstances.ToArray(), false);
+            //
+            // var combinedMeshView = Object.Instantiate(
+            //     combinedMeshViewTemplate,
+            //     Vector3.zero,
+            //     Quaternion.identity);
+            //
+            // combineMeshView.MeshFilter.sharedMesh = combinedMesh;
+            
+            return combinedMeshView;
         }
     }
 }

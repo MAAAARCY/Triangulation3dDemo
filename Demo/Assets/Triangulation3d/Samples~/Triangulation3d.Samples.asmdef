@@ -12,7 +12,8 @@
         "Unity.ResourceManager",
         "Unity.Addressables",
         "Unity.TextMeshPro",
-        "Triangulation3d"
+        "Triangulation3d",
+        "ObservableCollections"
     ],
     "includePlatforms": [
         "Editor",

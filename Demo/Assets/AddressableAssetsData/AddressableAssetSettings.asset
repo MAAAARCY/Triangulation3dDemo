@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 8760a750e8b9ed9479a5e850920e77e1
   m_currentHash:
     serializedVersion: 2
-    Hash: 7220ed94f4def5b6f5da4ff83f75e16f
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
           m_Key: HostingServiceUploadSpeed
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
-          m_Data: ServerData/WebGL;Library/com.unity.addressables/aa/WebGL/WebGL
+          m_Data: ServerData/WebGL;Library/com.unity.addressables/aa/Windows/StandaloneWindows64
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean

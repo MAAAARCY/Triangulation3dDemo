@@ -49,6 +49,8 @@ namespace Triangulation3d.Samples
         private readonly ApperanceModel appearanceModel;
         private readonly JsonFileUploadModel jsonFileUploadModel;
         private readonly SelectObjectModel selectObjectModel;
+        
+        public SelectObjectModel SelectObjectModel => selectObjectModel;
 
         public MenuModel(
             CameraSensitivityModel cameraSensitivityModel,
@@ -100,7 +102,7 @@ namespace Triangulation3d.Samples
                         break;
                     case MenuElementType.JsonFileUpload:
                         AddElement(new MenuElementModel(
-                            text: "Json File Upload", 
+                            text: "Json File Upload\n(Not Implemented)", 
                             onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
                             elementType: menuElementType));
                         break;
@@ -109,20 +111,17 @@ namespace Triangulation3d.Samples
                             text: "Select Object", 
                             onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
                             elementType: menuElementType));
+                        selectObjectModel.InitializeSelectableObject();
                         break;
                 }
             }
-            
         }
+        
+        
 
         public void AddElement(MenuElementModel menuElementModel)
         {
             addElementSubject.OnNext(menuElementModel);
-        }
-
-        public void AddElementType(MenuElementType menuElementType)
-        {
-
         }
 
         public async UniTask OnValueChangedAsync(
@@ -142,6 +141,13 @@ namespace Triangulation3d.Samples
                     break;
             }
         }
+
+        public async UniTask OnSelectableObjectAsync(
+            string objectName,
+            CancellationToken cancellationToken)
+        {
+            await selectObjectModel.OnSelectableObjectChangedAsync(objectName, cancellationToken);
+        }
         
         public async UniTask ClickAsync(
             MenuElementModel menuElementModel,
@@ -158,7 +164,6 @@ namespace Triangulation3d.Samples
                 case MenuElementType.SelectObject:
                     break;
             }
-            await menuElementModel.ClickAsync(cancellationToken);
         }
     }
 }

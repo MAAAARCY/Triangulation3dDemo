@@ -9,6 +9,7 @@ namespace Triangulation3d.Samples
     public class MeshSamplesLifetimeScope : BaseLifetimeScope
     {
         [SerializeField] private MeshView meshViewTemplate;
+        [SerializeField] private CombinedMeshView combinedMeshViewTemplate;
         [SerializeField] private MeshSamplesView meshSamplesView;
         [SerializeField] private MenuView menuView;
         [SerializeField] private CameraView cameraView;
@@ -36,6 +37,7 @@ namespace Triangulation3d.Samples
         {
             builder.Register<MeshRepository>(Lifetime.Singleton);
             builder.Register<SurfaceRepository>(Lifetime.Singleton);
+            builder.Register<CombinedMeshRepository>(Lifetime.Singleton);
         }
 
         private void ConfigureMesh(IContainerBuilder builder)
@@ -46,6 +48,7 @@ namespace Triangulation3d.Samples
             builder.Register<MeshModel>(Lifetime.Singleton);
             
             builder.RegisterInstance(meshViewTemplate);
+            builder.RegisterInstance(combinedMeshViewTemplate);
             builder.RegisterEntryPoint<MeshSamplesPresenter>();
         }
 

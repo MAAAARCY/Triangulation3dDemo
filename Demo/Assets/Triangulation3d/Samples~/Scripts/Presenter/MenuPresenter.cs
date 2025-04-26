@@ -1,9 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
+using ObservableCollections;
 using R3;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using Triangulation3d.Samples.UI;
 using UnityEngine;
@@ -21,6 +23,8 @@ namespace Triangulation3d.Samples
         private readonly MenuView view;
         
         private Dictionary<MenuElementType, MenuElementView> cachedElementViews = new();
+        
+        private ISynchronizedView<SelectableObjectModel, SelectableObjectView> cachedSelectableObjectView;
 
         private bool isInitialize= false;
 
@@ -30,6 +34,7 @@ namespace Triangulation3d.Samples
             this.view = view;
             
             //CreateMenu(view.ContentObject.transform);
+            
             OnSubscribe();
         }
         
@@ -106,6 +111,7 @@ namespace Triangulation3d.Samples
                 .Subscribe(menuElementType =>
                 {
                     menuElementViewId = (int)menuElementType;
+                    
                     OnMenuElement(
                         menuElementModel, 
                         view.MenuElementViews[menuElementViewId], 
@@ -150,15 +156,35 @@ namespace Triangulation3d.Samples
                         .ColorParameterView
                         .Button
                         .OnClickAsObservable()
-                        .Subscribe(_ => OnClickElementAsync(
-                            menuElementModel, 
-                            menuElementView,
-                            menuElementType).Forget(Debug.LogWarning))
+                        .Subscribe(_ =>
+                        {
+                            // OnClickElementAsync(
+                            //     menuElementModel,
+                            //     menuElementView,
+                            //     menuElementType).Forget(Debug.LogWarning);
+                        })
                         .AddTo(disposable);
                     break;
                 case MenuElementType.JsonFileUpload:
                     break;
                 case MenuElementType.SelectObject:
+                    
+                    cachedSelectableObjectView = model.SelectObjectModel.ObservableCollection.CreateView(
+                        selectableObjectModel =>
+                    {
+                        var selectableObjectView = Object.Instantiate(
+                            view.SelectObjectView.SelectableObjectView,
+                            view.SelectObjectView.RootObject.transform);
+                        
+                        selectableObjectView.Initialize(selectableObjectModel.ObjectName);
+                        
+                        selectableObjectView.Button.OnClickAsObservable()
+                            .Subscribe(_ => OnClickSelectableObjectAsync(selectableObjectView.ObjectName).Forget(Debug.LogWarning))
+                            .AddTo(disposable);
+                        
+                        return selectableObjectView;
+                    });
+                    
                     break;
             }
         }
@@ -207,7 +233,7 @@ namespace Triangulation3d.Samples
                 // menuElementView.AppearanceViewTemplate
                 //     .ColorParameterView
                 //     .Button.interactable = false;
-                
+                Debug.Log(elementType);
                 await model.ClickAsync(
                     menuElementModel,
                     menuElementView,
@@ -217,6 +243,23 @@ namespace Triangulation3d.Samples
             catch (Exception e)
             {
                 source.Cancel();
+                Debug.LogWarning(e);
+            }
+        }
+
+        private async UniTask OnClickSelectableObjectAsync(
+            string objectName)
+        {
+            var source = new CancellationTokenSource();
+            cancellationTokenSources.Add(source);
+            
+            try
+            {
+                await model.OnSelectableObjectAsync(objectName, source.Token);
+            }
+            catch (Exception e)
+            {
+                
                 Debug.LogWarning(e);
             }
         }
