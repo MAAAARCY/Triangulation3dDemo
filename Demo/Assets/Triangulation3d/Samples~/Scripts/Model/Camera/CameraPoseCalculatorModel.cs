@@ -69,11 +69,11 @@ namespace Triangulation3d.Samples
             switch (keyCode)
             {
                 case KeyCode.A:
-                    return CalculateCameraPoseAlongCircle(camera, target, rotationSpeed, 0);
+                    return CalculateCameraPoseAlongCircle(camera, target, -rotationSpeed, 0);
                 case KeyCode.S:
                     return CalculateCameraPoseAlongCircle(camera, target, 0, -moveSpeed);
                 case KeyCode.D:
-                    return CalculateCameraPoseAlongCircle(camera, target, -rotationSpeed, 0);
+                    return CalculateCameraPoseAlongCircle(camera, target, rotationSpeed, 0);
                 case KeyCode.W:
                     return CalculateCameraPoseAlongCircle(camera, target, 0, moveSpeed);
                 default:
