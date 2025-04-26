@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Triangulation3d.Runtime;
-using UnityEditor.Search;
 using UnityEngine;
 
 namespace Triangulation3d.Samples
