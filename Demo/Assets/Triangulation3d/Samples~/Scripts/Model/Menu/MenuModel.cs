@@ -102,7 +102,7 @@ namespace Triangulation3d.Samples
                         break;
                     case MenuElementType.JsonFileUpload:
                         AddElement(new MenuElementModel(
-                            text: "Json File Upload", 
+                            text: "Json File Upload\n(Not Implemented)", 
                             onClickAsync: cameraSensitivityModel.OnClickCameraSensitivityAsync, 
                             elementType: menuElementType));
                         break;
