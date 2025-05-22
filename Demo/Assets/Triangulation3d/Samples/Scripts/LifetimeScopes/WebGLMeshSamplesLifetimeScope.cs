@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace Triangulation3d.Samples
 {
-    public class EditorMeshSamplesLifetimeScope : BaseLifetimeScope
+    public class WebGLMeshSamplesLifetimeScope : BaseLifetimeScope
     {
         [SerializeField] private MeshView meshViewTemplate;
         [SerializeField] private CombinedMeshView combinedMeshViewTemplate;
@@ -49,7 +49,7 @@ namespace Triangulation3d.Samples
             
             builder.RegisterInstance(meshViewTemplate);
             builder.RegisterInstance(combinedMeshViewTemplate);
-            builder.RegisterEntryPoint<EditorMeshSamplesPresenter>();
+            builder.RegisterEntryPoint<WebGLMeshSamplesPresenter>();
         }
 
         private void ConfigureCamera(IContainerBuilder builder)
@@ -77,5 +77,4 @@ namespace Triangulation3d.Samples
             builder.RegisterEntryPoint<MenuPresenter>();
         }
     }
-   
 }

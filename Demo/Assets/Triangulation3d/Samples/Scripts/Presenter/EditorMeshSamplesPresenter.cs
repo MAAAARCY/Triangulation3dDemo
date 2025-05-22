@@ -9,7 +9,7 @@ using VContainer.Unity;
 
 namespace Triangulation3d.Samples
 {
-    public class MeshSamplesPresenter : IAsyncStartable
+    public class EditorMeshSamplesPresenter : IAsyncStartable
     {
         private readonly MeshSamplesModel model;
         private readonly MeshSamplesView view;
@@ -17,7 +17,7 @@ namespace Triangulation3d.Samples
         private readonly CompositeDisposable disposable = new();
         private readonly List<CancellationTokenSource> cancellationTokenSources = new();
 
-        public MeshSamplesPresenter(
+        public EditorMeshSamplesPresenter(
             MeshSamplesModel model,
             MeshSamplesView view)
         {
