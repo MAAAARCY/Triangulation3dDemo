@@ -9,10 +9,14 @@ namespace Triangulation3d.Samples
         private readonly CameraPoseModel poseModel;
         private readonly CameraRepository cameraRepository;
 
-        public Observable<float> OnRotationSpeedAsObservable()
-        {
-            return cameraRepository.RotationSpeedProperty.AsObservable();
-        }
+        public Observable<float> OnRotationSpeedAsObservable() 
+            => cameraRepository.RotationSpeedProperty.AsObservable();
+        
+        public Observable<float> OnMoveSpeedAsObservable()
+            => cameraRepository.MoveSpeedProperty.AsObservable();
+        
+        public Observable<float> OnZoomSpeedAsObservable()
+            => cameraRepository.ZoomSpeedProperty.AsObservable();
 
         public CameraModel(CameraPoseModel poseModel, CameraRepository cameraRepository)
         {
@@ -40,7 +44,19 @@ namespace Triangulation3d.Samples
         public void OnRotationSpeedChanged(float rotationSpeed)
         {
             // Debug.Log(rotationSpeed);
-            poseModel.RotationSpeedProperty.Value = rotationSpeed * 3.0f;
+            poseModel.RotationSpeedProperty.Value = rotationSpeed;
+        }
+        
+        public void OnMoveSpeedChanged(float moveSpeed)
+        {
+            // Debug.Log(moveSpeed);
+            poseModel.MoveSpeedProperty.Value = moveSpeed;
+        }
+        
+        public void OnZoomSpeedChanged(float zoomSpeed)
+        {
+            // Debug.Log(zoomSpeed);
+            poseModel.ZoomSpeedProperty.Value = zoomSpeed;
         }
     }
 

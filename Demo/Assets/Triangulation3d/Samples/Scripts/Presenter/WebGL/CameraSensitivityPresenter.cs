@@ -54,13 +54,23 @@ namespace Triangulation3d.Samples
         
         void OnSubscribe()
         {
-            view.SliderValueProperty
-                .Subscribe(value => OnValueChangedAsync(value)
+            view.RotationSpeedProperty
+                .Subscribe(value => OnRotationSpeedChangedAsync(value)
+                    .Forget(Debug.LogWarning))
+                .AddTo(disposable);
+            
+            view.MoveSpeedProperty
+                .Subscribe(value => OnMoveSpeedChangedAsync(value)
+                    .Forget(Debug.LogWarning))
+                .AddTo(disposable);
+            
+            view.ZoomSpeedProperty
+                .Subscribe(value => OnZoomSpeedChangedAsync(value)
                     .Forget(Debug.LogWarning))
                 .AddTo(disposable);
         }
 
-        private async UniTask OnValueChangedAsync(float rotationSpeed)
+        private async UniTask OnRotationSpeedChangedAsync(float rotationSpeed)
         {
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
@@ -69,6 +79,42 @@ namespace Triangulation3d.Samples
             {
                 await model.OnRotationSpeedChangedAsync(
                     rotationSpeed,
+                    source.Token);
+            }
+            catch (Exception e)
+            {
+                source.Cancel();
+                Debug.LogWarning(e);
+            }
+        }
+        
+        private async UniTask OnMoveSpeedChangedAsync(float moveSpeed)
+        {
+            var source = new CancellationTokenSource();
+            cancellationTokenSources.Add(source);
+            
+            try
+            {
+                await model.OnMoveSpeedChangedAsync(
+                    moveSpeed,
+                    source.Token);
+            }
+            catch (Exception e)
+            {
+                source.Cancel();
+                Debug.LogWarning(e);
+            }
+        }
+        
+        private async UniTask OnZoomSpeedChangedAsync(float zoomSpeed)
+        {
+            var source = new CancellationTokenSource();
+            cancellationTokenSources.Add(source);
+            
+            try
+            {
+                await model.OnZoomSpeedChangedAsync(
+                    zoomSpeed,
                     source.Token);
             }
             catch (Exception e)

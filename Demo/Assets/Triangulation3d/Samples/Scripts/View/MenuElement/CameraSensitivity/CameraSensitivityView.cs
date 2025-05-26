@@ -16,12 +16,33 @@ namespace Triangulation3d.Samples
 
         public CameraParameterView CameraParameterView => cameraParameterView;
 
-        public ReactiveProperty<float> SliderValueProperty { get; } = new(1.0f);
+        public ReactiveProperty<float> RotationSpeedProperty { get; } = new(3.0f);
+        public ReactiveProperty<float> MoveSpeedProperty { get; } = new(3.0f);
+        public ReactiveProperty<float> ZoomSpeedProperty { get; } = new(3.0f);
         
-        public void ChangeCameraSensitivity(float value)
+        private void Dispose()
         {
-            // Debug.Log($"ChangeCameraSensitivity: {value}");
-            SliderValueProperty.Value = value;
+            RotationSpeedProperty.Dispose();
+            MoveSpeedProperty.Dispose();
+            ZoomSpeedProperty.Dispose();
+        }
+        
+        public void ChangeRotateSensitivity(float value)
+        {
+            Debug.Log($"ChangeCameraSensitivity: {value}");
+            RotationSpeedProperty.Value = value;
+        }
+        
+        public void ChangeMoveSensitivity(float value)
+        {
+            Debug.Log($"ChangeMoveSensitivity: {value}");
+            MoveSpeedProperty.Value = value;
+        }
+        
+        public void ChangeZoomSensitivity(float value)
+        {
+            Debug.Log($"ChangeZoomSensitivity: {value}");
+            ZoomSpeedProperty.Value = value;
         }
     }
 }
