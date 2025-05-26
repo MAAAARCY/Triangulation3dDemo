@@ -20,7 +20,7 @@ namespace Triangulation3d.Samples
         
         public void ChangeCameraSensitivity(float value)
         {
-            Debug.Log($"ChangeCameraSensitivity: {value}");
+            // Debug.Log($"ChangeCameraSensitivity: {value}");
             SliderValueProperty.Value = value;
         }
     }
