@@ -22,7 +22,6 @@ namespace Triangulation3d.Samples
             disposable.Dispose();
         }
         
-        
         public async UniTask OnRotationSpeedChangedAsync(
             float rotationSpeed,
             CancellationToken cancellationToken)

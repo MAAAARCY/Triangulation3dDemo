@@ -11,13 +11,17 @@ namespace Triangulation3d.Samples
         [SerializeField] private MeshView meshViewTemplate;
         [SerializeField] private CombinedMeshView combinedMeshViewTemplate;
         [SerializeField] private MeshSamplesView meshSamplesView;
-        [SerializeField] private MenuView menuView;
         [SerializeField] private CameraView cameraView;
+        
+        [SerializeField] private CameraSensitivityView cameraSensitivityView;
+        [SerializeField] private AppearanceView appearanceView;
+        [SerializeField] private JsonFileUploadView jsonFileUploadView;
+        [SerializeField] private SelectObjectView selectObjectView;
         
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
-            
+
             ConfigureAPI(builder);
             ConfigureRepository(builder);
             ConfigureMesh(builder);
@@ -46,7 +50,7 @@ namespace Triangulation3d.Samples
             builder.RegisterInstance(meshSamplesView);
             builder.Register<MeshFactoryModel>(Lifetime.Singleton);
             builder.Register<MeshModel>(Lifetime.Singleton);
-            
+
             builder.RegisterInstance(meshViewTemplate);
             builder.RegisterInstance(combinedMeshViewTemplate);
             builder.RegisterEntryPoint<WebGLMeshSamplesPresenter>();
@@ -70,11 +74,10 @@ namespace Triangulation3d.Samples
             builder.Register<ApperanceModel>(Lifetime.Singleton);
             builder.Register<JsonFileUploadModel>(Lifetime.Singleton);
             builder.Register<SelectObjectModel>(Lifetime.Singleton);
-            
-            builder.Register<MenuModel>(Lifetime.Singleton);
-            builder.RegisterInstance(menuView);
-            
-            builder.RegisterEntryPoint<MenuPresenter>();
+
+            builder.RegisterInstance(cameraSensitivityView);
+
+            builder.RegisterEntryPoint<CameraSensitivityPresenter>();
         }
     }
 }

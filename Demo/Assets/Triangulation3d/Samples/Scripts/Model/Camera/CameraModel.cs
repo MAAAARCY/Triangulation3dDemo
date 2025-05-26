@@ -8,13 +8,13 @@ namespace Triangulation3d.Samples
     {
         private readonly CameraPoseModel poseModel;
         private readonly CameraRepository cameraRepository;
-        
+
         public Observable<float> OnRotationSpeedAsObservable()
-            => cameraRepository.RotationSpeedProperty.AsObservable();
-        
-        public CameraModel(
-            CameraPoseModel poseModel,
-            CameraRepository cameraRepository)
+        {
+            return cameraRepository.RotationSpeedProperty.AsObservable();
+        }
+
+        public CameraModel(CameraPoseModel poseModel, CameraRepository cameraRepository)
         {
             this.poseModel = poseModel;
             this.cameraRepository = cameraRepository;

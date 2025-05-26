@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using R3;
 
 namespace Triangulation3d.Samples
 {
@@ -10,11 +11,17 @@ namespace Triangulation3d.Samples
     public class CameraSensitivityView : BaseMenuContentView
     {
         [SerializeField] private CameraParameterView cameraParameterView;
-        
+
         [SerializeField] private Slider cameraSensitivitySlider;
-        
+
         public CameraParameterView CameraParameterView => cameraParameterView;
+
+        public ReactiveProperty<float> SliderValueProperty { get; } = new(1.0f);
         
-        public Slider CameraSensitivitySlider => cameraSensitivitySlider;
+        public void ChangeCameraSensitivity(float value)
+        {
+            Debug.Log($"ChangeCameraSensitivity: {value}");
+            SliderValueProperty.Value = value;
+        }
     }
 }
