@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using R3;
 using System.Collections.Generic;
 using Triangulation3d.Runtime;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -16,12 +17,18 @@ namespace Triangulation3d.Samples
         private readonly SurfaceRepository surfaceRepository;
         private readonly CombinedMeshRepository combinedMeshRepository;
         private readonly MeshModel meshModel;
-
-        // public Observable<string> OnSelectableObjectNameAsObservable()
-        //     => combinedMeshRepository.SelectableObjectNameProperty.AsObservable();
+        
+        [DllImport("__Internal")]
+        private static extern void Callback(string message);
         
         public Observable<string> OnSurfaceAddedAsObservable()
             => surfaceRepository.SurfaceNameProperty.AsObservable();
+        
+        public Subject<string> OnSurfaceAddedSubject
+            => surfaceRepository.SurfaceAddedSubject;
+        
+        public Observable<string> OnObjectAddedAsObservable()
+            => combinedMeshRepository.AddedObjectNameProperty.AsObservable();
         
         public readonly Subject<string> SurfaceAddedSubject = new();
         
@@ -134,6 +141,16 @@ namespace Triangulation3d.Samples
             combinedMeshRepository.SetCombinedMesh(objectName, combinedMeshView);
             
             return combinedMeshView;
+        }
+        
+        /// <summary>
+        /// 新規オブジェクトの作成が完了したことをReact側に通知
+        /// </summary>
+        /// <param name="objectName"></param>
+        public void OnObjectAdded(string objectName)
+        {
+            Callback(objectName);
+            Debug.Log($"Object added: {objectName}");
         }
         
         /// <summary>

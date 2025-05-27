@@ -77,9 +77,11 @@ namespace Triangulation3d.Samples
             builder.Register<SelectObjectModel>(Lifetime.Singleton);
 
             builder.RegisterInstance(cameraSensitivityView);
+            builder.RegisterInstance(jsonFileUploadView);
             builder.RegisterInstance(selectObjectView);
 
             builder.RegisterEntryPoint<CameraSensitivityPresenter>();
+            builder.RegisterEntryPoint<JsonFileUploadPresenter>();
             builder.RegisterEntryPoint<SelectObjectPresenter>();
         }
     }

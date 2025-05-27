@@ -59,13 +59,21 @@ namespace Triangulation3d.Samples
             model.SurfaceAddedSubject
                 .Subscribe(name => OnSurfaceAdded(name).Forget(Debug.LogWarning))
                 .AddTo(disposable);
+            
+            // model.OnSurfaceAddedAsObservable()
+            //     .Subscribe(name => OnSurfaceAdded(name).Forget(Debug.LogWarning))
+            //     .AddTo(disposable);
+
+            model.OnObjectAddedAsObservable()
+                .Subscribe(OnObjectAdded)
+                .AddTo(disposable);
         }
 
         private async UniTask OnSurfaceAdded(string name)
         {
-            Debug.Log(name);
-            if (name == "Sample") return;
             // Debug.Log(name);
+            if (name == "Sample") return;
+            Debug.Log($"{name} in OnSurfaceAdded");
             
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
@@ -73,6 +81,30 @@ namespace Triangulation3d.Samples
             try
             {
                 await model.CreateMeshAsync(name, source.Token);
+            }
+            catch (Exception e)
+            {
+                source.Cancel();
+                Debug.LogWarning(e);
+            }
+        }
+
+        /// <summary>
+        /// 新規オブジェクトの作成が完了したことをReact側に通知
+        /// </summary>
+        /// <param name="objectName"></param>
+        private void OnObjectAdded(string objectName)
+        {
+            // Debug.Log(objectName);
+            if (objectName == "Sample") return;
+            Debug.Log($"{objectName} in OnObjectAdded");
+
+        var source = new CancellationTokenSource();
+            cancellationTokenSources.Add(source);
+
+            try
+            {
+                model.OnObjectAdded(objectName);
             }
             catch (Exception e)
             {

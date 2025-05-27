@@ -17,13 +17,13 @@ public class ReactCommandLogger : MonoBehaviour
         Callback(message);
     }
 
-    private void Start()
-    {
-        # if UNITY_WEBGL == true && UNITY_EDITOR == false
-            ExecuteCallback("Hello from Unity");
-        # endif
-            Debug.Log("ReactCommandLogger");
-    }
+    // private void Start()
+    // {
+    //     # if UNITY_WEBGL == true && UNITY_EDITOR == false
+    //         ExecuteCallback("Hello from Unity");
+    //     # endif
+    //         // Debug.Log("ReactCommandLogger");
+    // }
 
     public void ChangeCameraSensitivity(float value)
     {
@@ -40,3 +40,4 @@ public class ReactCommandLogger : MonoBehaviour
         ExecuteCallback($"ChangeSelectableObject: {objectName}");
     }
 }
+

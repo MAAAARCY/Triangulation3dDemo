@@ -17,6 +17,8 @@ namespace Triangulation3d.Samples
         public Dictionary<string, List<Surface>> CachedSurfaces => cachedSurfaces;
 
         public ReactiveProperty<string> SurfaceNameProperty => new("Sample");
+        
+        public readonly Subject<string> SurfaceAddedSubject = new();
 
         public SurfaceRepository(
             SurfaceApiModel surfaceApiModel)
@@ -43,8 +45,17 @@ namespace Triangulation3d.Samples
         public void SetSurfaces(string objectName, List<Surface> surfaces)
         {
             cachedSurfaces[objectName] = surfaces;
-            Debug.Log(objectName);
-            Debug.Log(surfaces.Count);
+            Debug.Log($"SetSurface Name: {objectName}");
+            Debug.Log($"Surfaces Count: {surfaces.Count}");
+            SurfaceNameProperty.OnNext(objectName);
+        }
+        
+        public void SetSurfaces(List<Surface> surfaces)
+        {
+            var objectName = $"Object {cachedSurfaces.Count-2}";
+            cachedSurfaces[objectName] = surfaces;
+            Debug.Log($"SetSurface Name: {objectName}");
+            Debug.Log($"Surfaces Count: {surfaces.Count}");
             SurfaceNameProperty.OnNext(objectName);
         }
     }

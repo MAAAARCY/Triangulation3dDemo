@@ -63,7 +63,7 @@ namespace Triangulation3d.Samples
 
         private async UniTask OnSurfaceAdded(string name)
         {
-            Debug.Log(name);
+            // Debug.Log(name);
             if (name == "Sample") return;
             // Debug.Log(name);
             
@@ -82,3 +82,4 @@ namespace Triangulation3d.Samples
         }
     }
 }
+
