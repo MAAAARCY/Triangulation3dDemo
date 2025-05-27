@@ -24,13 +24,13 @@ namespace Triangulation3d.Samples
         public Observable<string> OnSurfaceAddedAsObservable()
             => surfaceRepository.SurfaceNameProperty.AsObservable();
         
-        public Subject<string> OnSurfaceAddedSubject
+        public Subject<string> SurfaceAddedSubject
             => surfaceRepository.SurfaceAddedSubject;
         
         public Observable<string> OnObjectAddedAsObservable()
             => combinedMeshRepository.AddedObjectNameProperty.AsObservable();
         
-        public readonly Subject<string> SurfaceAddedSubject = new();
+        // public readonly Subject<string> SurfaceAddedSubject = new();
         
         public MeshSamplesModel(
             MeshFactoryModel meshFactoryModel,
@@ -60,7 +60,11 @@ namespace Triangulation3d.Samples
                     objectName,
                     cancellationToken:cancellationToken));
                 
-                SurfaceAddedSubject.OnNext(objectName);
+                surfaceRepository.SetSurfaces(
+                    objectName,
+                    surfaces[0]);
+                
+                // surfaceRepository.SurfaceAddedSubject.OnNext(objectName);
             }
         }
 
@@ -72,9 +76,9 @@ namespace Triangulation3d.Samples
                 objectName, 
                 cancellationToken);
             
-            surfaceRepository.SetSurfaces(
-                objectName,
-                surfaces);
+            // surfaceRepository.SetSurfaces(
+            //     objectName,
+            //     surfaces);
 
             return surfaces;
         }

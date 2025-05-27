@@ -47,7 +47,8 @@ namespace Triangulation3d.Samples
             cachedSurfaces[objectName] = surfaces;
             Debug.Log($"SetSurface Name: {objectName}");
             Debug.Log($"Surfaces Count: {surfaces.Count}");
-            SurfaceNameProperty.OnNext(objectName);
+            // SurfaceNameProperty.OnNext(objectName);
+            SurfaceAddedSubject.OnNext(objectName);
         }
         
         public void SetSurfaces(List<Surface> surfaces)
@@ -56,7 +57,8 @@ namespace Triangulation3d.Samples
             cachedSurfaces[objectName] = surfaces;
             Debug.Log($"SetSurface Name: {objectName}");
             Debug.Log($"Surfaces Count: {surfaces.Count}");
-            SurfaceNameProperty.OnNext(objectName);
+            // SurfaceNameProperty.OnNext(objectName);
+            SurfaceAddedSubject.OnNext(objectName);
         }
     }
 }
