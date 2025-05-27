@@ -9,10 +9,13 @@ namespace Triangulation3d.Samples
     public class JsonFileUploadView : BaseMenuContentView
     {
         public ReactiveProperty<string> JsonContentProperty { get; } = new();
+        
+        /// <summary>
+        /// JSONファイルアップロードボタンがクリックされたときの処理
+        /// </summary>
+        /// <param name="jsonContent"></param>
         public void OnJsonFileUploadButtonClicked(string jsonContent)
         {
-            // JSONファイルアップロードボタンがクリックされたときの処理
-            Debug.Log("JSONファイルアップロードボタンがクリックされました。");
             if (string.IsNullOrEmpty(jsonContent))
             {
                 Debug.LogWarning("アップロードされたJSONコンテンツが空です。");

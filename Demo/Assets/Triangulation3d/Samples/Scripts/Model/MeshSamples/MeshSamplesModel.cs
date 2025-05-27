@@ -21,16 +21,11 @@ namespace Triangulation3d.Samples
         [DllImport("__Internal")]
         private static extern void Callback(string message);
         
-        public Observable<string> OnSurfaceAddedAsObservable()
-            => surfaceRepository.SurfaceNameProperty.AsObservable();
-        
         public Subject<string> SurfaceAddedSubject
             => surfaceRepository.SurfaceAddedSubject;
         
         public Observable<string> OnObjectAddedAsObservable()
             => combinedMeshRepository.AddedObjectNameProperty.AsObservable();
-        
-        // public readonly Subject<string> SurfaceAddedSubject = new();
         
         public MeshSamplesModel(
             MeshFactoryModel meshFactoryModel,
@@ -63,8 +58,6 @@ namespace Triangulation3d.Samples
                 surfaceRepository.SetSurfaces(
                     objectName,
                     surfaces[0]);
-                
-                // surfaceRepository.SurfaceAddedSubject.OnNext(objectName);
             }
         }
 
@@ -73,26 +66,18 @@ namespace Triangulation3d.Samples
             CancellationToken cancellationToken)
         {
             var surfaces = await surfaceRepository.GetSurfacesAsync(
-                objectName, 
+                objectName,
                 cancellationToken);
-            
-            // surfaceRepository.SetSurfaces(
-            //     objectName,
-            //     surfaces);
 
             return surfaces;
         }
 
         public async UniTask CreateMeshAsync(
             string objectName,
-            //List<Surface> surfaces,
             CancellationToken cancellationToken)
         {
-            //Debug.Log($"Creating mesh for {objectName}");
             var surfaces = surfaceRepository.CachedSurfaces[objectName];
-            //Debug.Log($"Surface count {surfaces.Count}");
             var meshViews = await GetMeshViewsAsync(surfaces, cancellationToken);
-            //Debug.Log($"Mesh views count {meshViews.Count}");
             var combinedMeshView = await GetCombinedMeshViewAsync(
                 meshViews, 
                 objectName,

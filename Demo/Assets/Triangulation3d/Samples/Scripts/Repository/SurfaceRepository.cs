@@ -38,16 +38,12 @@ namespace Triangulation3d.Samples
         {
             var surfaces = await surfaceApiModel.GetSurfaceAsync(objectName, cancellationToken);
 
-            // SurfaceNameProperty.OnNext(objectName);
             return surfaces;
         }
 
         public void SetSurfaces(string objectName, List<Surface> surfaces)
         {
             cachedSurfaces[objectName] = surfaces;
-            Debug.Log($"SetSurface Name: {objectName}");
-            Debug.Log($"Surfaces Count: {surfaces.Count}");
-            // SurfaceNameProperty.OnNext(objectName);
             SurfaceAddedSubject.OnNext(objectName);
         }
         
@@ -55,9 +51,6 @@ namespace Triangulation3d.Samples
         {
             var objectName = $"Object {cachedSurfaces.Count-2}";
             cachedSurfaces[objectName] = surfaces;
-            Debug.Log($"SetSurface Name: {objectName}");
-            Debug.Log($"Surfaces Count: {surfaces.Count}");
-            // SurfaceNameProperty.OnNext(objectName);
             SurfaceAddedSubject.OnNext(objectName);
         }
     }

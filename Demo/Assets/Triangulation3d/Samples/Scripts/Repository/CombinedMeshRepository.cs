@@ -27,7 +27,6 @@ namespace Triangulation3d.Samples
             
             cachedCombinedMeshes[objectName] = combinedMeshView;
             
-            Debug.Log($"{objectName} in SetCombinedMesh");
             AddedObjectNameProperty.OnNext(objectName);
         }
 

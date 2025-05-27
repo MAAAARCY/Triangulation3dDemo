@@ -24,7 +24,6 @@ namespace Triangulation3d.Samples
             CancellationToken cancellationToken)
         {
             // cancellationToken.ThrowIfCancellationRequested();
-            Debug.Log("OnJsonFileUploadAsync is called");
             try
             {
                 // JSONコンテンツをロードして処理する
@@ -36,7 +35,6 @@ namespace Triangulation3d.Samples
                 }
                 
                 surfaceRepository.SetSurfaces(surfaces);
-                Debug.Log($"Loaded {surfaces.Count} surfaces from JSON content.");
             }
             catch (Exception e)
             {

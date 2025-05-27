@@ -13,7 +13,6 @@ namespace Triangulation3d.Samples
         private readonly JsonFileUploadModel model;
         private readonly JsonFileUploadView view;
         
-        // private readonly CompositeDisposable disposable = new();
         private readonly List<CancellationTokenSource> cancellationTokenSources = new();
 
         public JsonFileUploadPresenter(
@@ -59,7 +58,7 @@ namespace Triangulation3d.Samples
         {
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
-            Debug.Log("OnJsonFileUploadButtonClickedAsync");
+            
             try
             {
                 await model.OnJsonFileUploadAsync(jsonContent, source.Token);

@@ -59,10 +59,6 @@ namespace Triangulation3d.Samples
             model.SurfaceAddedSubject
                 .Subscribe(name => OnSurfaceAdded(name).Forget(Debug.LogWarning))
                 .AddTo(disposable);
-            
-            // model.OnSurfaceAddedAsObservable()
-            //     .Subscribe(name => OnSurfaceAdded(name).Forget(Debug.LogWarning))
-            //     .AddTo(disposable);
 
             model.OnObjectAddedAsObservable()
                 .Subscribe(OnObjectAdded)
@@ -71,9 +67,7 @@ namespace Triangulation3d.Samples
 
         private async UniTask OnSurfaceAdded(string name)
         {
-            // Debug.Log(name);
             if (name == "Sample") return;
-            Debug.Log($"{name} in OnSurfaceAdded");
             
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
@@ -95,11 +89,9 @@ namespace Triangulation3d.Samples
         /// <param name="objectName"></param>
         private void OnObjectAdded(string objectName)
         {
-            // Debug.Log(objectName);
             if (objectName == "Sample") return;
-            Debug.Log($"{objectName} in OnObjectAdded");
 
-        var source = new CancellationTokenSource();
+            var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
 
             try
