@@ -46,6 +46,14 @@ namespace Triangulation3d.Samples
             model.OnRotationSpeedAsObservable()
                 .Subscribe(OnRotationSpeed)
                 .AddTo(view);
+            
+            model.OnMoveSpeedAsObservable()
+                .Subscribe(OnMoveSpeed)
+                .AddTo(view);
+            
+            model.OnZoomSpeedAsObservable()
+                .Subscribe(OnZoomSpeed)
+                .AddTo(view);
         }
 
         private void OnKeyBoardInput(KeyCode keyCode)
@@ -69,6 +77,16 @@ namespace Triangulation3d.Samples
         private void OnRotationSpeed(float speed)
         {
             model.OnRotationSpeedChanged(speed);
+        }
+
+        private void OnMoveSpeed(float speed)
+        {
+            model.OnMoveSpeedChanged(speed);
+        }
+
+        private void OnZoomSpeed(float speed)
+        {
+            model.OnZoomSpeedChanged(speed);
         }
     }
 

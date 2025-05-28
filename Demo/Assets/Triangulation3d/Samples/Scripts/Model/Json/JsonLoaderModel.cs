@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Triangulation3d.Runtime;
 
 namespace Triangulation3d.Samples
@@ -31,7 +32,7 @@ namespace Triangulation3d.Samples
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     TextAsset jsonAsset = handle.Result;
-                    Debug.Log("JSON asset loaded successfully: " + jsonAsset.name);
+                    // Debug.Log("JSON asset loaded successfully: " + jsonAsset.name);
                 
                     var blenderSurfaces = JsonConvert.DeserializeObject<BlenderSurfaces>(jsonAsset.text);
                     result = blenderSurfaces.Surfaces;
@@ -53,5 +54,29 @@ namespace Triangulation3d.Samples
         {
             Addressables.Release(handle);
         }
+
+        public async UniTask<List<Surface>> LoadJsonAsync(
+            string jsonContent, 
+            CancellationToken cancellationToken)
+        {
+            var result = new List<Surface>();
+            
+            try
+            {
+                // 直接jsonContentを使用してデシリアライズする
+                var blenderSurfaces = JsonConvert.DeserializeObject<BlenderSurfaces>(jsonContent);
+                result = blenderSurfaces.Surfaces;
+                // Debug.Log("JSON content parsed successfully");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error parsing JSON content: " + e.Message);
+            }
+            
+            await UniTask.Yield();
+            
+            return result;
+        }
     }
 }
+

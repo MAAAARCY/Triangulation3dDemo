@@ -21,36 +21,26 @@ namespace Triangulation3d.Samples
         private readonly List<CancellationTokenSource> cancellationTokenSources = new();
         private readonly MenuModel model;
         private readonly MenuView view;
-        
+
         private Dictionary<MenuElementType, MenuElementView> cachedElementViews = new();
-        
+
         private ISynchronizedView<SelectableObjectModel, SelectableObjectView> cachedSelectableObjectView;
 
-        private bool isInitialize= false;
+        private bool isInitialize = false;
 
         public MenuPresenter(MenuModel model, MenuView view)
         {
             this.model = model;
             this.view = view;
-            
-            //CreateMenu(view.ContentObject.transform);
-            
+
             OnSubscribe();
         }
-        
+
         public async UniTask StartAsync(CancellationToken cancellationToken)
         {
             try
             {
-                //await model.StartAsync(cancellationToken);
                 model.InitializeElements();
-                // await UniTask.WaitUntil(() => isInitialize, cancellationToken: cancellationToken);
-                //
-                // while (!cancellationToken.IsCancellationRequested)
-                // {
-                //     OnMenuElements();
-                //     await UniTask.DelayFrame(2, cancellationToken: cancellationToken);
-                // }
             }
             catch (Exception e)
             {
@@ -68,7 +58,7 @@ namespace Triangulation3d.Samples
                 source.Cancel();
                 source.Dispose();
             }
-            
+
             disposable.Dispose();
         }
 
@@ -106,28 +96,28 @@ namespace Triangulation3d.Samples
         private void OnElementAdded(MenuElementModel menuElementModel)
         {
             var menuElementViewId = 0;
-            
+
             menuElementModel.MenuElementTypeProperty
                 .Subscribe(menuElementType =>
                 {
                     menuElementViewId = (int)menuElementType;
-                    
+
                     OnMenuElement(
-                        menuElementModel, 
-                        view.MenuElementViews[menuElementViewId], 
+                        menuElementModel,
+                        view.MenuElementViews[menuElementViewId],
                         menuElementType);
                 })
                 .AddTo(disposable);
-            
+
             menuElementModel.TextProperty
                 .Subscribe(text => view.MenuElementViews[menuElementViewId].Title.text = text)
                 .AddTo(view.MenuElementViews[menuElementViewId]);
-            
+
             menuElementModel.DescriptionProperty
                 .Subscribe(description => view.MenuElementViews[menuElementViewId].GetDescriptionObject().SetActive(description))
                 .AddTo(view.MenuElementViews[menuElementViewId]);
         }
-        
+
         /// <summary>
         /// 各メニュー項目の監視
         /// </summary>
@@ -141,11 +131,11 @@ namespace Triangulation3d.Samples
                 case MenuElementType.CameraControls:
                     break;
                 case MenuElementType.CameraSensitivity:
-                    view.CameraSensitivityView
-                        .CameraSensitivitySlider
+                    view.CameraSensitivityView.CameraParameterView
+                        .Slider
                         .OnValueChangedAsObservable()
                         .Subscribe(value => OnValueChangedAsync(
-                            menuElementModel, 
+                            menuElementModel,
                             menuElementView,
                             menuElementType,
                             value).Forget(Debug.LogWarning))
@@ -168,23 +158,23 @@ namespace Triangulation3d.Samples
                 case MenuElementType.JsonFileUpload:
                     break;
                 case MenuElementType.SelectObject:
-                    
+
                     cachedSelectableObjectView = model.SelectObjectModel.ObservableCollection.CreateView(
                         selectableObjectModel =>
                     {
                         var selectableObjectView = Object.Instantiate(
                             view.SelectObjectView.SelectableObjectView,
                             view.SelectObjectView.RootObject.transform);
-                        
+
                         selectableObjectView.Initialize(selectableObjectModel.ObjectName);
-                        
+
                         selectableObjectView.Button.OnClickAsObservable()
                             .Subscribe(_ => OnClickSelectableObjectAsync(selectableObjectView.ObjectName).Forget(Debug.LogWarning))
                             .AddTo(disposable);
-                        
+
                         return selectableObjectView;
                     });
-                    
+
                     break;
             }
         }
@@ -197,14 +187,9 @@ namespace Triangulation3d.Samples
         {
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
-            
+
             try
             {
-                //var view = cachedElementViews[MenuElementType.CameraSensitivity].Content.CameraParameterView;
-                // menuElementView.AppearanceViewTemplate
-                //     .ColorParameterView
-                //     .Button.interactable = false;
-                
                 await model.OnValueChangedAsync(
                     menuElementModel,
                     menuElementView,
@@ -219,47 +204,19 @@ namespace Triangulation3d.Samples
             }
         }
 
-        private async UniTask OnClickElementAsync(
-            MenuElementModel menuElementModel,
-            MenuElementView menuElementView,
-            MenuElementType elementType)
-        {
-            var source = new CancellationTokenSource();
-            cancellationTokenSources.Add(source);
-
-            try
-            {
-                //var view = cachedElementViews[MenuElementType.CameraSensitivity].Content.CameraParameterView;
-                // menuElementView.AppearanceViewTemplate
-                //     .ColorParameterView
-                //     .Button.interactable = false;
-                Debug.Log(elementType);
-                await model.ClickAsync(
-                    menuElementModel,
-                    menuElementView,
-                    elementType,
-                    source.Token);
-            }
-            catch (Exception e)
-            {
-                source.Cancel();
-                Debug.LogWarning(e);
-            }
-        }
-
         private async UniTask OnClickSelectableObjectAsync(
             string objectName)
         {
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
-            
+
             try
             {
                 await model.OnSelectableObjectAsync(objectName, source.Token);
             }
             catch (Exception e)
             {
-                
+
                 Debug.LogWarning(e);
             }
         }

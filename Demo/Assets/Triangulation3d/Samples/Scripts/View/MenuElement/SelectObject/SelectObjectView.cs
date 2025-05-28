@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using R3;
+using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Triangulation3d.Samples
 {
@@ -17,7 +17,13 @@ namespace Triangulation3d.Samples
         
         public GameObject RootObject => rootObject;
         
-        //public List<SelectableObjectView> SelectableObjectViews => selectableObjectViews;
+        public ReactiveProperty<string> SelectableObjectNameProperty { get; } = new();
+        
+        public void ChangeSelectableObject(string objectName)
+        {
+            Debug.Log($"ChangeSelectableObject: {objectName}");
+            SelectableObjectNameProperty.Value = objectName;
+        }
 
     }
 }

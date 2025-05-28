@@ -22,12 +22,27 @@ namespace Triangulation3d.Samples
             disposable.Dispose();
         }
         
-        
         public async UniTask OnRotationSpeedChangedAsync(
             float rotationSpeed,
             CancellationToken cancellationToken)
         {
             cameraRepository.RotationSpeedProperty.OnNext(rotationSpeed);
+            await UniTask.Yield();
+        }
+        
+        public async UniTask OnMoveSpeedChangedAsync(
+            float moveSpeed,
+            CancellationToken cancellationToken)
+        {
+            cameraRepository.MoveSpeedProperty.OnNext(moveSpeed);
+            await UniTask.Yield();
+        }
+        
+        public async UniTask OnZoomSpeedChangedAsync(
+            float zoomSpeed,
+            CancellationToken cancellationToken)
+        {
+            cameraRepository.ZoomSpeedProperty.OnNext(zoomSpeed);
             await UniTask.Yield();
         }
 

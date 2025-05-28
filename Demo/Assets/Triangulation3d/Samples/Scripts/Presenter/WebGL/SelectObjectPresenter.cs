@@ -1,38 +1,34 @@
-using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using R3;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using Triangulation3d.Runtime;
-using UnityEngine;
 using VContainer.Unity;
+using Debug = UnityEngine.Debug;
 
 namespace Triangulation3d.Samples
 {
-    public class MeshSamplesPresenter : IAsyncStartable
+    public class SelectObjectPresenter : IAsyncStartable
     {
-        private readonly MeshSamplesModel model;
-        private readonly MeshSamplesView view;
-
+        private readonly SelectObjectModel model;
+        private readonly SelectObjectView view;
+        
         private readonly CompositeDisposable disposable = new();
         private readonly List<CancellationTokenSource> cancellationTokenSources = new();
 
-        public MeshSamplesPresenter(
-            MeshSamplesModel model,
-            MeshSamplesView view)
+        public SelectObjectPresenter(SelectObjectModel model, SelectObjectView view)
         {
             this.model = model;
             this.view = view;
-
+            
             OnSubscribe();
         }
-
+        
         public async UniTask StartAsync(CancellationToken cancellationToken)
         {
             try
             {
-                await model.StartAsync(cancellationToken);
-                // await model.StartAsync(cancellationToken);
+                await UniTask.Yield();
             }
             catch (Exception e)
             {
@@ -40,39 +36,35 @@ namespace Triangulation3d.Samples
             }
         }
         
-        /// <summary>
-        /// 破棄
-        /// </summary>
-        public void Dispose()
+        private void Dispose()
         {
             foreach (var source in cancellationTokenSources)
             {
                 source.Cancel();
                 source.Dispose();
             }
-            
+
             disposable.Dispose();
         }
-
-        private void OnSubscribe()
+        
+        void OnSubscribe()
         {
-            model.SurfaceAddedSubject
-                .Subscribe(name => OnSurfaceAdded(name).Forget(Debug.LogWarning))
-                .AddTo(disposable);
+            view.SelectableObjectNameProperty
+                .Subscribe(name => OnSelectableObjectChangedAsync(name)
+                    .Forget(Debug.LogWarning))
+                .AddTo(view);
         }
-
-        private async UniTask OnSurfaceAdded(string name)
+        
+        private async UniTask OnSelectableObjectChangedAsync(string objectName)
         {
-            Debug.Log(name);
-            if (name == "Sample") return;
-            // Debug.Log(name);
-            
             var source = new CancellationTokenSource();
             cancellationTokenSources.Add(source);
-
+            
             try
             {
-                await model.CreateMeshAsync(name, source.Token);
+                await model.OnSelectableObjectChangedAsync(
+                    objectName,
+                    source.Token);
             }
             catch (Exception e)
             {

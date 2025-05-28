@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace Triangulation3d.Samples
 {
-    public class MeshSamplesLifetimeScope : BaseLifetimeScope
+    public class EditorMeshSamplesLifetimeScope : BaseLifetimeScope
     {
         [SerializeField] private MeshView meshViewTemplate;
         [SerializeField] private CombinedMeshView combinedMeshViewTemplate;
@@ -49,7 +49,7 @@ namespace Triangulation3d.Samples
             
             builder.RegisterInstance(meshViewTemplate);
             builder.RegisterInstance(combinedMeshViewTemplate);
-            builder.RegisterEntryPoint<MeshSamplesPresenter>();
+            builder.RegisterEntryPoint<EditorMeshSamplesPresenter>();
         }
 
         private void ConfigureCamera(IContainerBuilder builder)

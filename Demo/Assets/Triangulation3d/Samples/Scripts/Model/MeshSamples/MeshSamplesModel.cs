@@ -4,8 +4,8 @@ using Cysharp.Threading.Tasks;
 using R3;
 using System.Collections.Generic;
 using Triangulation3d.Runtime;
+using System.Runtime.InteropServices;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Triangulation3d.Samples
 {
@@ -16,14 +16,15 @@ namespace Triangulation3d.Samples
         private readonly SurfaceRepository surfaceRepository;
         private readonly CombinedMeshRepository combinedMeshRepository;
         private readonly MeshModel meshModel;
-
-        // public Observable<string> OnSelectableObjectNameAsObservable()
-        //     => combinedMeshRepository.SelectableObjectNameProperty.AsObservable();
         
-        public Observable<string> OnSurfaceAddedAsObservable()
-            => surfaceRepository.SurfaceNameProperty.AsObservable();
+        [DllImport("__Internal")]
+        private static extern void Callback(string message);
         
-        public readonly Subject<string> SurfaceAddedSubject = new();
+        public Subject<string> SurfaceAddedSubject
+            => surfaceRepository.SurfaceAddedSubject;
+        
+        public Observable<string> OnObjectAddedAsObservable()
+            => combinedMeshRepository.AddedObjectNameProperty.AsObservable();
         
         public MeshSamplesModel(
             MeshFactoryModel meshFactoryModel,
@@ -41,19 +42,18 @@ namespace Triangulation3d.Samples
 
         public async UniTask StartAsync(CancellationToken cancellationToken)
         {
-            // ここの実装をSelectableObjectModelの初期化後に実行するように変更する
-            // await OnMeshesAsync(cancellationToken);
-            
             // StartAsyncに書くべき処理ではないため移動を検討
             var objectNames = new List<string>() { "Cube", "Suzanne" };
             
             foreach (var objectName in objectNames)
             {
-                var surfaces = await UniTask.WhenAll(GetSurfacesAsync(
+                var surfaces = await GetSurfacesAsync(
                     objectName,
-                    cancellationToken:cancellationToken));
+                    cancellationToken:cancellationToken);
                 
-                SurfaceAddedSubject.OnNext(objectName);
+                surfaceRepository.SetSurfaces(
+                    objectName,
+                    surfaces);
             }
         }
 
@@ -62,26 +62,18 @@ namespace Triangulation3d.Samples
             CancellationToken cancellationToken)
         {
             var surfaces = await surfaceRepository.GetSurfacesAsync(
-                objectName, 
-                cancellationToken);
-            
-            surfaceRepository.SetSurfaces(
                 objectName,
-                surfaces);
+                cancellationToken);
 
             return surfaces;
         }
 
         public async UniTask CreateMeshAsync(
             string objectName,
-            //List<Surface> surfaces,
             CancellationToken cancellationToken)
         {
-            //Debug.Log($"Creating mesh for {objectName}");
             var surfaces = surfaceRepository.CachedSurfaces[objectName];
-            //Debug.Log($"Surface count {surfaces.Count}");
             var meshViews = await GetMeshViewsAsync(surfaces, cancellationToken);
-            //Debug.Log($"Mesh views count {meshViews.Count}");
             var combinedMeshView = await GetCombinedMeshViewAsync(
                 meshViews, 
                 objectName,
@@ -103,9 +95,10 @@ namespace Triangulation3d.Samples
             var meshViews = new List<MeshView>();
             foreach (var surface in surfaces)
             {
-                var meshView = await meshFactoryModel.CreateMeshView(
-                    surface: surface,
-                    cancellationToken: cancellationToken);
+                var meshView = await UniTask.Create(() => 
+                    meshFactoryModel.CreateMeshView(
+                        surface: surface,
+                        cancellationToken: cancellationToken));
                 
                 meshViews.Add(meshView);
             }
@@ -134,6 +127,16 @@ namespace Triangulation3d.Samples
             combinedMeshRepository.SetCombinedMesh(objectName, combinedMeshView);
             
             return combinedMeshView;
+        }
+        
+        /// <summary>
+        /// 新規オブジェクトの作成が完了したことをReact側に通知
+        /// </summary>
+        /// <param name="objectName"></param>
+        public void OnObjectAdded(string objectName)
+        {
+            Callback(objectName);
+            Debug.Log($"Object added: {objectName}");
         }
         
         /// <summary>

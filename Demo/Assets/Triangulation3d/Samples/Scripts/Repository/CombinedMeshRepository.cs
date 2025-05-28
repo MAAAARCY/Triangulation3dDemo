@@ -15,6 +15,8 @@ namespace Triangulation3d.Samples
             => cachedCombinedMeshes.Values;
         
         public readonly ReactiveProperty<string> SelectedObjectNameProperty = new();
+        
+        public readonly ReactiveProperty<string> AddedObjectNameProperty = new();
 
         public void SetCombinedMesh(
             string objectName,
@@ -24,11 +26,14 @@ namespace Triangulation3d.Samples
             if (!cachedCombinedMeshes.TryAdd(objectName, combinedMeshView)) return;
             
             cachedCombinedMeshes[objectName] = combinedMeshView;
+            
+            AddedObjectNameProperty.OnNext(objectName);
         }
 
         public void Dispose()
         {
             SelectedObjectNameProperty.Dispose();
+            AddedObjectNameProperty.Dispose();
         }
 
         public bool OnSameObjectSelected(string objectName)

@@ -8,13 +8,17 @@ namespace Triangulation3d.Samples
     {
         private readonly CameraPoseModel poseModel;
         private readonly CameraRepository cameraRepository;
-        
-        public Observable<float> OnRotationSpeedAsObservable()
+
+        public Observable<float> OnRotationSpeedAsObservable() 
             => cameraRepository.RotationSpeedProperty.AsObservable();
         
-        public CameraModel(
-            CameraPoseModel poseModel,
-            CameraRepository cameraRepository)
+        public Observable<float> OnMoveSpeedAsObservable()
+            => cameraRepository.MoveSpeedProperty.AsObservable();
+        
+        public Observable<float> OnZoomSpeedAsObservable()
+            => cameraRepository.ZoomSpeedProperty.AsObservable();
+
+        public CameraModel(CameraPoseModel poseModel, CameraRepository cameraRepository)
         {
             this.poseModel = poseModel;
             this.cameraRepository = cameraRepository;
@@ -39,8 +43,17 @@ namespace Triangulation3d.Samples
 
         public void OnRotationSpeedChanged(float rotationSpeed)
         {
-            // Debug.Log(rotationSpeed);
-            poseModel.RotationSpeedProperty.Value = rotationSpeed * 3.0f;
+            poseModel.MoveLeftRightSpeedProperty.Value = rotationSpeed;
+        }
+        
+        public void OnMoveSpeedChanged(float moveSpeed)
+        {
+            poseModel.MoveUpDownSpeedProperty.Value = moveSpeed;
+        }
+        
+        public void OnZoomSpeedChanged(float zoomSpeed)
+        {
+            poseModel.ZoomSpeedProperty.Value = zoomSpeed;
         }
     }
 
