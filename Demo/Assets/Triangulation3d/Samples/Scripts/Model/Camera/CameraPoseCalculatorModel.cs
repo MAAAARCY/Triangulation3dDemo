@@ -118,7 +118,7 @@ namespace Triangulation3d.Samples
                 currentPhiAngle += 360.0f;
             }
 
-            Debug.Log($"currentPhiAngle: {currentPhiAngle}, currentThetaAngle: {currentThetaAngle}");
+            // Debug.Log($"currentPhiAngle: {currentPhiAngle}, currentThetaAngle: {currentThetaAngle}");
             
             if (currentThetaAngle < 1f)
             {
