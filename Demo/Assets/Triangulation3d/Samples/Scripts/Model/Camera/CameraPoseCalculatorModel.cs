@@ -10,9 +10,14 @@ namespace Triangulation3d.Samples
         private readonly float smoothTime = 0.01f;
         
         /// <summary>
-        /// ターゲットオブジェクトを円の中心としたカメラの角度
+        /// ターゲットオブジェクトを円の中心とした時のPhi
         /// </summary>
-        private float currentAngle = 0;
+        private float currentPhiAngle = 0;
+        
+        /// <summary>
+        /// ターゲットオブジェクトを円の中心とした時のTheta
+        /// </summary>
+        private float currentThetaAngle = 90;
         
         /// <summary>
         /// 円の半径
@@ -21,7 +26,7 @@ namespace Triangulation3d.Samples
         
         public void InitializePose(Camera camera, Transform target)
         {
-            currentAngle = CalculateInitialAngle(camera);
+            currentPhiAngle= CalculateInitialAngle(camera);
             radius = CalculateRadius(camera, target);
         }
         
@@ -55,27 +60,27 @@ namespace Triangulation3d.Samples
         /// <param name="keyCode"></param>
         /// <param name="camera"></param>
         /// <param name="target"></param>
-        /// <param name="rotationSpeed"></param>
-        /// <param name="moveSpeed"></param>
+        /// <param name="moveLeftRightSpeed"></param>
+        /// <param name="moveUpDownSpeed"></param>
         /// <param name="zoomSpeed"></param>
         /// <returns></returns>
         public Vector3 CalculateCameraPose(
             KeyCode keyCode, 
             Camera camera, 
             Transform target,
-            float rotationSpeed,
-            float moveSpeed)
+            float moveLeftRightSpeed,
+            float moveUpDownSpeed)
         {
             switch (keyCode)
             {
                 case KeyCode.A:
-                    return CalculateCameraPoseAlongCircle(camera, target, -rotationSpeed, 0);
+                    return CalculateCameraPoseAlongCircle(camera, target, -moveLeftRightSpeed, 0);
                 case KeyCode.S:
-                    return CalculateCameraPoseAlongCircle(camera, target, 0, -moveSpeed);
+                    return CalculateCameraPoseAlongCircle(camera, target, 0, moveUpDownSpeed);
                 case KeyCode.D:
-                    return CalculateCameraPoseAlongCircle(camera, target, rotationSpeed, 0);
+                    return CalculateCameraPoseAlongCircle(camera, target, moveLeftRightSpeed, 0);
                 case KeyCode.W:
-                    return CalculateCameraPoseAlongCircle(camera, target, 0, moveSpeed);
+                    return CalculateCameraPoseAlongCircle(camera, target, 0, -moveUpDownSpeed);
                 default:
                     return camera.transform.position;
             }
@@ -94,30 +99,46 @@ namespace Triangulation3d.Samples
         /// </summary>
         /// <param name="camera"></param>
         /// <param name="target"></param>
-        /// <param name="rotationSpeed"></param>
-        /// <param name="moveSpeed"></param>
-        /// <param name="zoomSpeed"></param>
+        /// <param name="moveLeftRightSpeed"></param>
+        /// <param name="moveUpDownSpeed"></param>
         /// <returns></returns>
         private Vector3 CalculateCameraPoseAlongCircle(
             Camera camera,
             Transform target, 
-            float rotationSpeed,
-            float moveSpeed)
+            float moveLeftRightSpeed,
+            float moveUpDownSpeed)
         {
-            currentAngle += rotationSpeed;
+            currentPhiAngle+= moveLeftRightSpeed;
+            currentThetaAngle += moveUpDownSpeed;
                         
-            if (currentAngle >= 360.0f)
+            if (currentPhiAngle > 360.0f)
             {
-                currentAngle -= 360.0f;
+                currentPhiAngle -= 360.0f;
+            }
+            else if (currentPhiAngle < -360.0f)
+            {
+                currentPhiAngle += 360.0f;
+            }
+
+            Debug.Log($"currentPhiAngle: {currentPhiAngle}, currentThetaAngle: {currentThetaAngle}");
+            
+            if (currentThetaAngle < 1f)
+            {
+                currentThetaAngle = 1f;
+            }
+            else if (currentThetaAngle > 179f)
+            {
+                currentThetaAngle = 179.0f;
             }
             
             // 角度をラジアンに変換
-            var radians = currentAngle * Mathf.Deg2Rad;
+            var phiRadians = currentPhiAngle* Mathf.Deg2Rad;
+            var thetaRadians = currentThetaAngle * Mathf.Deg2Rad;
         
             // 円周上の位置を計算
-            var x = target.position.x + radius * Mathf.Cos(radians);
-            var y = camera.transform.position.y + moveSpeed;
-            var z = target.position.z + radius * Mathf.Sin(radians);
+            var x = target.position.x + radius * Mathf.Sin(thetaRadians) * Mathf.Cos(phiRadians);
+            var y = target.position.y + radius * Mathf.Cos(thetaRadians);
+            var z = target.position.z + radius * Mathf.Sin(thetaRadians) * Mathf.Sin(phiRadians);
         
             // カメラの位置を設定
             var result = new Vector3(x, y, z);
@@ -138,16 +159,16 @@ namespace Triangulation3d.Samples
             float zoomSpeed)
         {
             // 角度をラジアンに変換
-            var radians = currentAngle * Mathf.Deg2Rad;
+            var phiRadians = currentPhiAngle* Mathf.Deg2Rad;
             
             // ズーム操作
             if ((zoomSpeed > 0 && radius < 10) || (zoomSpeed < 0 && radius > 1))
                 radius += zoomSpeed;
             
             // 円周上の位置を計算
-            var x = target.position.x + radius * Mathf.Cos(radians);
+            var x = target.position.x + radius * Mathf.Cos(phiRadians);
             var y = camera.transform.position.y;
-            var z = target.position.z + radius * Mathf.Sin(radians);
+            var z = target.position.z + radius * Mathf.Sin(phiRadians);
         
             // カメラの位置を設定
             var result = new Vector3(x, y, z);

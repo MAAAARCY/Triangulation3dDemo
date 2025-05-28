@@ -43,19 +43,16 @@ namespace Triangulation3d.Samples
 
         public void OnRotationSpeedChanged(float rotationSpeed)
         {
-            // Debug.Log(rotationSpeed);
-            poseModel.RotationSpeedProperty.Value = rotationSpeed;
+            poseModel.MoveLeftRightSpeedProperty.Value = rotationSpeed;
         }
         
         public void OnMoveSpeedChanged(float moveSpeed)
         {
-            // Debug.Log(moveSpeed);
-            poseModel.MoveSpeedProperty.Value = moveSpeed;
+            poseModel.MoveUpDownSpeedProperty.Value = moveSpeed;
         }
         
         public void OnZoomSpeedChanged(float zoomSpeed)
         {
-            // Debug.Log(zoomSpeed);
             poseModel.ZoomSpeedProperty.Value = zoomSpeed;
         }
     }
