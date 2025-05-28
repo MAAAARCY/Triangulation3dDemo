@@ -1,5 +1,4 @@
 ﻿using R3;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -43,12 +42,6 @@ namespace Triangulation3d.Samples
 
         private void Update()
         {
-            // if (EventSystem.current.IsPointerOverGameObject())
-            // {
-            //     Debug.Log("Over");
-            //     return;
-            // }
-            
             if (Input.anyKey)
             {
                 foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))

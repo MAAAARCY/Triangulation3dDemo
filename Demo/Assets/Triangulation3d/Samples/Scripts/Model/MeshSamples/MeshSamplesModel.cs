@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Triangulation3d.Runtime;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Triangulation3d.Samples
 {
@@ -43,21 +42,18 @@ namespace Triangulation3d.Samples
 
         public async UniTask StartAsync(CancellationToken cancellationToken)
         {
-            // ここの実装をSelectableObjectModelの初期化後に実行するように変更する
-            // await OnMeshesAsync(cancellationToken);
-            
             // StartAsyncに書くべき処理ではないため移動を検討
             var objectNames = new List<string>() { "Cube", "Suzanne" };
             
             foreach (var objectName in objectNames)
             {
-                var surfaces = await UniTask.WhenAll(GetSurfacesAsync(
+                var surfaces = await GetSurfacesAsync(
                     objectName,
-                    cancellationToken:cancellationToken));
+                    cancellationToken:cancellationToken);
                 
                 surfaceRepository.SetSurfaces(
                     objectName,
-                    surfaces[0]);
+                    surfaces);
             }
         }
 
@@ -99,9 +95,10 @@ namespace Triangulation3d.Samples
             var meshViews = new List<MeshView>();
             foreach (var surface in surfaces)
             {
-                var meshView = await meshFactoryModel.CreateMeshView(
-                    surface: surface,
-                    cancellationToken: cancellationToken);
+                var meshView = await UniTask.Create(() => 
+                    meshFactoryModel.CreateMeshView(
+                        surface: surface,
+                        cancellationToken: cancellationToken));
                 
                 meshViews.Add(meshView);
             }

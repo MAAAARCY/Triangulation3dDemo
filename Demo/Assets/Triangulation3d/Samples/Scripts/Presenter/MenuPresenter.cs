@@ -33,8 +33,6 @@ namespace Triangulation3d.Samples
             this.model = model;
             this.view = view;
 
-            //CreateMenu(view.ContentObject.transform);
-
             OnSubscribe();
         }
 
@@ -42,15 +40,7 @@ namespace Triangulation3d.Samples
         {
             try
             {
-                //await model.StartAsync(cancellationToken);
                 model.InitializeElements();
-                // await UniTask.WaitUntil(() => isInitialize, cancellationToken: cancellationToken);
-                //
-                // while (!cancellationToken.IsCancellationRequested)
-                // {
-                //     OnMenuElements();
-                //     await UniTask.DelayFrame(2, cancellationToken: cancellationToken);
-                // }
             }
             catch (Exception e)
             {
@@ -205,34 +195,6 @@ namespace Triangulation3d.Samples
                     menuElementView,
                     elementType,
                     rotationSpeed,
-                    source.Token);
-            }
-            catch (Exception e)
-            {
-                source.Cancel();
-                Debug.LogWarning(e);
-            }
-        }
-
-        private async UniTask OnClickElementAsync(
-            MenuElementModel menuElementModel,
-            MenuElementView menuElementView,
-            MenuElementType elementType)
-        {
-            var source = new CancellationTokenSource();
-            cancellationTokenSources.Add(source);
-
-            try
-            {
-                //var view = cachedElementViews[MenuElementType.CameraSensitivity].Content.CameraParameterView;
-                // menuElementView.AppearanceViewTemplate
-                //     .ColorParameterView
-                //     .Button.interactable = false;
-                Debug.Log(elementType);
-                await model.ClickAsync(
-                    menuElementModel,
-                    menuElementView,
-                    elementType,
                     source.Token);
             }
             catch (Exception e)

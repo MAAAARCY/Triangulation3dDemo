@@ -7,8 +7,6 @@ namespace Triangulation3d.Samples
     /// </summary>
     public class CameraPoseCalculatorModel
     {
-        private readonly float smoothTime = 0.01f;
-        
         /// <summary>
         /// ターゲットオブジェクトを円の中心とした時のPhi
         /// </summary>
@@ -160,15 +158,16 @@ namespace Triangulation3d.Samples
         {
             // 角度をラジアンに変換
             var phiRadians = currentPhiAngle* Mathf.Deg2Rad;
+            var thetaRadians = currentThetaAngle * Mathf.Deg2Rad;
             
             // ズーム操作
             if ((zoomSpeed > 0 && radius < 10) || (zoomSpeed < 0 && radius > 1))
                 radius += zoomSpeed;
             
             // 円周上の位置を計算
-            var x = target.position.x + radius * Mathf.Cos(phiRadians);
-            var y = camera.transform.position.y;
-            var z = target.position.z + radius * Mathf.Sin(phiRadians);
+            var x = target.position.x + radius * Mathf.Sin(thetaRadians) * Mathf.Cos(phiRadians);
+            var y = target.position.y + radius * Mathf.Cos(thetaRadians);
+            var z = target.position.z + radius * Mathf.Sin(thetaRadians) * Mathf.Sin(phiRadians);
         
             // カメラの位置を設定
             var result = new Vector3(x, y, z);

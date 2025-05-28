@@ -32,7 +32,6 @@ namespace Triangulation3d.Samples
             try
             {
                 await model.StartAsync(cancellationToken);
-                // await model.StartAsync(cancellationToken);
             }
             catch (Exception e)
             {

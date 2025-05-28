@@ -63,7 +63,7 @@ namespace Triangulation3d.Samples
             this.jsonFileUploadModel = jsonFileUploadModel;
             this.selectObjectModel = selectObjectModel;
             
-            //InitializeElements();
+            // InitializeElements();
         }
         
         /// <summary>
